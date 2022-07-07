@@ -26,5 +26,5 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = 'DesignPattern.example.App'
+    mainClass = 'DesignPattern.App'
 }
