@@ -12,7 +12,7 @@ public class HudRenderer implements Renderable{
   @Override
   public void Rendering(){
     System.out.printf("HP : %d / %d    MP : %d / %d",
-      hp.getNowHp(), hp.getMaxHp(), mp.getNowMp(), mp.getMaxMp());
+      hp.getMaxHp(), hp.getNowHp(), mp.getMaxMp(), mp.getNowMp());
   }
 
   public Hp getHp(){

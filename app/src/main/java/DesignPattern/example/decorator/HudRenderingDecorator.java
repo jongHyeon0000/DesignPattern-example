@@ -5,6 +5,7 @@ public class HudRenderingDecorator extends HudRenderer{
   
   HudRenderingDecorator(HudRenderer hudRenderer){
     super(hudRenderer.getHp(), hudRenderer.getMp());
+    this.hudRenderer = hudRenderer;
   }
   
   @Override

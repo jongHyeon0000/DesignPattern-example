@@ -1,7 +1,7 @@
 package DesignPattern.example.decorator;
 
-public class RenderingWithWarning extends HudRenderingDecorator{
-  RenderingWithWarning(HudRenderer hudRenderer){
+public class HudRenderingWithWarning extends HudRenderingDecorator{
+  HudRenderingWithWarning(HudRenderer hudRenderer){
     super(hudRenderer);
   }
 
@@ -12,6 +12,7 @@ public class RenderingWithWarning extends HudRenderingDecorator{
   }
 
   private void WarningRendererLogic(){
+    System.out.println();
     if(super.hudRenderer.getHp().getHpPercentage() <= 20){
       System.out.printf("!!!WARNING!!!");
       System.out.println();

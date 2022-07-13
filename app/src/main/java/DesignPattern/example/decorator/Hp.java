@@ -3,12 +3,12 @@ package DesignPattern.example.decorator;
 public class Hp{
   private int maxHp;
   private int nowHp;
-  private int hpPercentage;
 
   Hp(int maxHp, int nowHp){
-    this.maxHp = maxHp;
-    this.nowHp = nowHp;
-    hpPercentage = (maxHp / nowHp) * 100;
+    if(maxHp >= nowHp){
+      this.maxHp = maxHp;
+      this.nowHp = nowHp;
+    }
   }
 
   public int getMaxHp(){
@@ -17,7 +17,6 @@ public class Hp{
 
   public void setMaxHp(int maxHp){
     this.maxHp = maxHp;
-    hpPercentage = (maxHp / nowHp) * 100;
   }
 
   public int getNowHp(){
@@ -26,10 +25,9 @@ public class Hp{
 
   public void setNowHp(int nowHp){
     this.nowHp = nowHp;
-    hpPercentage = (maxHp / nowHp) * 100;
   }
 
-  public int getHpPercentage(){
-    return hpPercentage;
+  public float getHpPercentage(){
+    return (nowHp / (float)maxHp) * 100;
   }
 }
