@@ -6,13 +6,22 @@ public class Main {
     hudRenderer.Rendering();
 
     System.out.println();
+    System.out.println();
 
     HudRenderingDecorator hudRenderingWithPercent = new HudRenderingWithPercent(hudRenderer);
     hudRenderingWithPercent.Rendering();
 
     System.out.println();
+    System.out.println();
 
     HudRenderingDecorator hudRenderingWithWarning = new HudRenderingWithWarning(hudRenderer);
     hudRenderingWithWarning.Rendering();
+    
+    System.out.println();
+    System.out.println();
+    
+    HudRenderingDecorator hudRenderingWithPercentAndWarning =
+        new HudRenderingWithWarning(new HudRenderingWithPercent(hudRenderer));
+    hudRenderingWithPercentAndWarning.Rendering();
   }
 }

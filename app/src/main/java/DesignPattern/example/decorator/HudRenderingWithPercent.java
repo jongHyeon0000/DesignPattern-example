@@ -14,7 +14,7 @@ public class HudRenderingWithPercent extends HudRenderingDecorator{
   private void PercentRenderingLogic(){
     System.out.println();
     System.out.printf("( %f%c )    ( %f%c )",
-      super.hudRenderer.getHp().getHpPercentage(), '%',
-        super.hudRenderer.getMp().getMpPercentage(), '%');
+      hudRenderer.getHp().getHpPercentage(), '%',
+        hudRenderer.getMp().getMpPercentage(), '%');
   }
 }

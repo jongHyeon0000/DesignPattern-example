@@ -13,20 +13,20 @@ public class HudRenderingWithWarning extends HudRenderingDecorator{
 
   private void WarningRendererLogic(){
     System.out.println();
-    if(super.hudRenderer.getHp().getHpPercentage() <= 20){
+    if(hudRenderer.getHp().getHpPercentage() <= 20){
       System.out.printf("!!!WARNING!!!");
       System.out.println();
     }
-    else if(super.hudRenderer.getHp().getHpPercentage() > 20 && super.hudRenderer.getHp().getHpPercentage() <= 40){
+    else if(hudRenderer.getHp().getHpPercentage() > 20 && hudRenderer.getHp().getHpPercentage() <= 40){
       System.out.printf("!warning!");
       System.out.println();
     }
 
-    if(super.hudRenderer.getMp().getMpPercentage() <= 20){
+    if(hudRenderer.getMp().getMpPercentage() <= 20){
       System.out.printf("!!!DRINK YOUR MP POTION!!!");
       System.out.println();
     }
-    else if(super.hudRenderer.getMp().getMpPercentage() > 20 && super.hudRenderer.getMp().getMpPercentage() <= 40){
+    else if(hudRenderer.getMp().getMpPercentage() > 20 && hudRenderer.getMp().getMpPercentage() <= 40){
       System.out.printf("!drink your mp potion!");
       System.out.println();
     }

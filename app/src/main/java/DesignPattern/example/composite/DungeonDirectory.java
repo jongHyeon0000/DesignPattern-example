@@ -17,16 +17,13 @@ public class DungeonDirectory extends Dungeon{
   
   public void addDungeon(DungeonDirectory dungeonDirectory){
     dungeonDirectory.setLevel(dungeonDirectory.getLevel() + 1);
-    Iterator<Dungeon> iter = dungeonDirectory.getIterator();
 
-    while(iter.hasNext()){
-      Dungeon dungeonListPick = iter.next();
-      dungeonListPick.setLevel(dungeonDirectory.getLevel());
+    for (Iterator<Dungeon> iter = dungeonDirectory.getIterator(); iter.hasNext();){
+      iter.next().setLevel(dungeonDirectory.getLevel());
     }
     dungeonList.add(dungeonDirectory);
-    
   }
-
+  
 
   public void removeDungeon(Dungeon dungeon){
     dungeonList.remove(dungeon);
@@ -39,7 +36,7 @@ public class DungeonDirectory extends Dungeon{
   public int getRemainingClearTime(){
     int remainingCrearTime = 0;
 
-    for(Dungeon iter : dungeonList){
+    for (Dungeon iter : dungeonList){
       remainingCrearTime += iter.timeLimit;
     }
 
