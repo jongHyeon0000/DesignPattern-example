@@ -1,5 +1,7 @@
 package DesignPattern.example.composite;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class DungeonDirectory extends Dungeon{
   private List<Dungeon> dungeonList = new ArrayList<Dungeon>();
@@ -14,12 +16,12 @@ public class DungeonDirectory extends Dungeon{
   }
   
   public void addDungeon(DungeonDirectory dungeonDirectory){
-    level++;
+    dungeonDirectory.setLevel(dungeonDirectory.getLevel() + 1);
     Iterator<Dungeon> iter = dungeonDirectory.getIterator();
 
     while(iter.hasNext()){
       Dungeon dungeonListPick = iter.next();
-      dungeonListPick.setLevel(level);
+      dungeonListPick.setLevel(dungeonDirectory.getLevel());
     }
     dungeonList.add(dungeonDirectory);
     
@@ -66,7 +68,7 @@ public class DungeonDirectory extends Dungeon{
 
   public void DungeonDirectoryRendering(){
     System.out.printf("<<----------------- Shelter Name : %s ----------------->>\n", dungeonName);
-    System.out.printf("    Map level : Safe\n");
+    System.out.printf("    Map level : %d\n", level);
     System.out.printf("    Monster's Attack Adventage : Safe\n");
     System.out.printf("    Monster's Defence Adventage : Safe\n");
     System.out.printf("    Next Dungeon's Time Limit : %d\n", getRemainingClearTime());
