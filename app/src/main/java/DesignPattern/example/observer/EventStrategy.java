@@ -1,18 +1,31 @@
 package DesignPattern.example.observer;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 abstract public class EventStrategy {
   private String eventName;
   private LocalDate beginDate;
   private LocalDate endDate;
+  protected float xpAdditionalScale;
+  protected float goldAdditionalScale;
   
-  EventStrategy(String eventName, int eventPeriod){
+  protected EventStrategy(String eventName, int eventPeriod){
     this.eventName = eventName;
+    xpAdditionalScale = 1.0f;
+    goldAdditionalScale = 1.0f;
     
-    beginDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+    beginDate = LocalDate.now();
+    endDate = LocalDate.now();
+    
     endDate.plusDays(eventPeriod);
   }
   
-  abstract public void Event(float additionalScale);
+  public float getXpAdditionalScale() {
+    return xpAdditionalScale;
+  }
+  
+  public float getGoldAdditionalScale() {
+    return goldAdditionalScale;
+  }
+  
+  abstract public void EventPrint();
 }

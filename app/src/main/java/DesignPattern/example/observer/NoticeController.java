@@ -11,8 +11,8 @@ abstract public class NoticeController {
   }
   
   public void setEventStrategy(EventStrategy eventStrategy) {
-    NotifyObserver();
     this.eventStrategy = eventStrategy;
+    NotifyObserver();
   }
   
   EventStrategy getEventStrategy(EventStrategy eventStrategy) {
@@ -32,6 +32,4 @@ abstract public class NoticeController {
       iter.Update(eventStrategy);
     }
   }
-  
-  abstract protected void sendMessage(int state);
 }
