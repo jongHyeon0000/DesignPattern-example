@@ -1,10 +1,10 @@
-package DesignPattern.example.observer;
+package DesignPattern.example.observer_strategy;
 import java.time.LocalDate;
 
 abstract public class EventStrategy {
-  private String eventName;
   private LocalDate beginDate;
   private LocalDate endDate;
+  protected String eventName;
   protected float xpAdditionalScale;
   protected float goldAdditionalScale;
   

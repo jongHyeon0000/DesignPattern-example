@@ -1,6 +1,5 @@
 package DesignPattern.example.composite;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class DungeonDirectory extends Dungeon{
@@ -17,20 +16,15 @@ public class DungeonDirectory extends Dungeon{
   
   public void addDungeon(DungeonDirectory dungeonDirectory){
     dungeonDirectory.setLevel(dungeonDirectory.getLevel() + 1);
-
-    for (Iterator<Dungeon> iter = dungeonDirectory.getIterator(); iter.hasNext();){
-      iter.next().setLevel(dungeonDirectory.getLevel());
+    
+    for(Dungeon iter : dungeonDirectory.dungeonList) {
+      iter.setLevel(dungeonDirectory.getLevel());
     }
     dungeonList.add(dungeonDirectory);
   }
-  
 
   public void removeDungeon(Dungeon dungeon){
     dungeonList.remove(dungeon);
-  }
-
-  public Iterator<Dungeon> getIterator(){
-    return dungeonList.iterator();
   }
 
   public int getRemainingClearTime(){

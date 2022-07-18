@@ -1,4 +1,4 @@
-package DesignPattern.example.observer;
+package DesignPattern.example.observer_strategy;
 
 public class NoEventStrategy extends EventStrategy{
   private static NoEventStrategy noEventStrategy;

@@ -1,4 +1,4 @@
-package DesignPattern.example.observer;
+package DesignPattern.example.observer_strategy;
 
 interface NoticeObserver {
   public void Update(EventStrategy eventStrategy);

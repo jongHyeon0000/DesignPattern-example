@@ -1,4 +1,4 @@
-package DesignPattern.example.observer;
+package DesignPattern.example.observer_strategy;
 
 public class XpEventStrategy extends EventStrategy{
   private XpEventStrategy(String eventName, int eventPeriod){
@@ -14,6 +14,7 @@ public class XpEventStrategy extends EventStrategy{
   
   @Override
   public void EventPrint() {
-    System.out.printf("<< Now Xp Eventing.. %d%c more gain >>  ", (int)(100 * xpAdditionalScale) - 100, '%');
+    System.out.printf("<< Now %s Xp Eventing.. %d%c more gain >>  ", eventName, (int)(100 * xpAdditionalScale) - 100, '%');
+    System.out.println();
   }
 }
