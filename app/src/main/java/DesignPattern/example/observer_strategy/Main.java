@@ -2,7 +2,7 @@ package DesignPattern.example.observer_strategy;
 
 public class Main {
   public static void main(String[] args) {
-    ServerNotice serverNotice = new ServerNotice();
+    ServerNotice serverNotice = new ServerNotice();   
     
     ServerPlayer serverPlayerAAA = new ServerPlayer("AAA");
     ServerPlayer serverPlayerBBB = new ServerPlayer("BBB");
