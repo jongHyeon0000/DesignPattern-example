@@ -2,13 +2,16 @@ package DesignPattern.example.observer_strategy;
 
 public class Main {
   public static void main(String[] args) {
-    ServerNotice serverNotice = new ServerNotice();   
+    ServerNotice serverNotice = new ServerNotice("AAA Server", 100);   
     
-    ServerPlayer serverPlayerAAA = new ServerPlayer("AAA");
-    ServerPlayer serverPlayerBBB = new ServerPlayer("BBB");
+    ServerPlayer serverPlayerAAA = new ServerPlayer("AAA", serverNotice);
+    ServerPlayer serverPlayerBBB = new ServerPlayer("BBB", serverNotice);
     
     serverNotice.Attach(serverPlayerAAA);
     serverNotice.Attach(serverPlayerBBB);
+    
+    serverPlayerAAA.Init();
+    serverPlayerBBB.Init();
     
     serverNotice.setEventStrategy(XpEventStrategy.getInstance("OpenEvent", 10, 1.2f));
     

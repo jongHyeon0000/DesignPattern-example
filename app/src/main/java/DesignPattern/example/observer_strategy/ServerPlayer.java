@@ -1,14 +1,16 @@
 package DesignPattern.example.observer_strategy;
 
 public class ServerPlayer implements NoticeObserver{
-  private EventStrategy eventStrategy;
-  private String playerName;
-  private float xpAdditionalScale;
-  private float goldAdditionalScale;
+  private String serverName;
+  private int maximumUserLimit;
+  private int numberOfUser;
   
-  ServerPlayer(String playerName){
+  private String playerName;
+  private ServerNotice serverNotice;
+  
+  ServerPlayer(String playerName, ServerNotice serverNotice){
     this.playerName = playerName;
-    eventStrategy = NoEventStrategy.getInstance("NO EVENT", 0);
+    this.serverNotice = serverNotice;
   }
   
   @Override
@@ -17,12 +19,23 @@ public class ServerPlayer implements NoticeObserver{
   }
   
   @Override
-  public void Update(EventStrategy eventStrategy) {
-    this.eventStrategy = eventStrategy;
+  public void Update() {
+    serverName = serverNotice.getServerName();
+    maximumUserLimit = serverNotice.getMaximumUser();
+    numberOfUser = serverNotice.getNumberOfUser();
+  }
+  
+  public void Init() {
+    System.out.printf("Welcome to %s server! %d / %d", serverName, numberOfUser, maximumUserLimit);
+    System.out.println();
+    
+    /*
+     * Init Logic...
+     */
   }
   
   public void Rendering(float xp, float gold) {
-    eventStrategy.EventPrint();
+    serverNotice.getEventStrategy().EventPrint();
     
     GainXpRendering(xp);
     GainGoldRendering(gold);
@@ -32,14 +45,14 @@ public class ServerPlayer implements NoticeObserver{
   
   public void GainXpRendering(float xp) {
     if(xp > 0) {
-      System.out.printf("%s's %f gained xp...", playerName, xp * eventStrategy.getXpAdditionalScale());
+      System.out.printf("%s's %f gained xp...", playerName, xp * serverNotice.getEventStrategy().getXpAdditionalScale());
       System.out.println();
     }
   }
    
   public void GainGoldRendering(float gold) {
     if(gold > 0) {
-      System.out.printf("%s's %f gained gold...", playerName, gold * eventStrategy.getGoldAdditionalScale());
+      System.out.printf("%s's %f gained gold...", playerName, gold * serverNotice.getEventStrategy().getGoldAdditionalScale());
       System.out.println();
     }
   }
