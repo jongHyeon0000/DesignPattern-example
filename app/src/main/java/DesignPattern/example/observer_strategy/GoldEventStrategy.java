@@ -1,19 +1,14 @@
 package DesignPattern.example.observer_strategy;
 
 public class GoldEventStrategy extends EventStrategy{
-  private GoldEventStrategy(String eventName, int eventPeriod){
+  GoldEventStrategy(String eventName, int eventPeriod, float goldAdditionalScale){
     super(eventName, eventPeriod);
-  }
-  
-  public static GoldEventStrategy getInstance(String eventName, int eventPeriod, float goldAdditionalScale) {
-    GoldEventStrategy goldEventStrategy = new GoldEventStrategy(eventName, eventPeriod);
-    goldEventStrategy.goldAdditionalScale = goldAdditionalScale;
-    
-    return goldEventStrategy;
+    this.goldAdditionalScale = goldAdditionalScale;
   }
   
   @Override
   public void EventPrint() {
+    System.out.println(beginDate + " ~ " + endDate);
     System.out.printf("<< Now %s Gold Eventing.. %d%c more gain >>  ", eventName,  (int)(100 * goldAdditionalScale) - 100, '%');
     System.out.println();
   }

@@ -1,20 +1,14 @@
 package DesignPattern.example.observer_strategy;
 
 public class NoEventStrategy extends EventStrategy{
-  private static NoEventStrategy noEventStrategy;
+  private static NoEventStrategy noEventStrategy = new NoEventStrategy("No Event..", 0);
   
   private NoEventStrategy(String eventName, int eventPeriod){
     super(eventName, eventPeriod);
   }
   
   public static NoEventStrategy getInstance(String eventName, int eventPeriod) {
-    if(noEventStrategy == null) {
-      noEventStrategy = new NoEventStrategy(eventName, eventPeriod);
-      return noEventStrategy;
-    }
-    else {
-      return noEventStrategy;
-    }
+    return noEventStrategy;
   }
 
   @Override

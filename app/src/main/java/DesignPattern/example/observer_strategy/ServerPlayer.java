@@ -26,12 +26,14 @@ public class ServerPlayer implements NoticeObserver{
   }
   
   public void Init() {
-    System.out.printf("Welcome to %s server! %d / %d", serverName, numberOfUser, maximumUserLimit);
-    System.out.println();
+    serverNotice.Init(this);
     
     /*
      * Init Logic...
      */
+    
+    System.out.printf("<----- Welcome to %s server! %d / %d ----->\n", serverName, numberOfUser, maximumUserLimit);
+    System.out.println();
   }
   
   public void Rendering(float xp, float gold) {

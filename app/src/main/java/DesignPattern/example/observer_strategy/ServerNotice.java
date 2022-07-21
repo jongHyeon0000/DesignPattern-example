@@ -6,31 +6,28 @@ public class ServerNotice extends ServerController{
     eventStrategy = NoEventStrategy.getInstance("NO EVENT", 0);
   }
   
+  @Override
   public void setEventStrategy(EventStrategy eventStrategy) {
     this.eventStrategy = eventStrategy;
     NotifyObserver();
   }
   
-  public EventStrategy getEventStrategy() {
-    return eventStrategy;
-  }
-  
-  public String getServerName() {
-    return serverName;
-  }
-  
-  public int getMaximumUser() {
-    return maximumUserLimit;
-  }
-  
-  public int getNumberOfUser() {
-    return noticeObserverList.size();
+  @Override
+  public void Init(NoticeObserver noticeObserver) {
+    Attach(noticeObserver);
+    
+    /*
+     * 
+     * Init Logic...
+     * 
+     */
+    
+    noticeObserver.Update();
   }
   
   @Override
-  public void Attach(NoticeObserver noticeObserver) {
+  protected void Attach(NoticeObserver noticeObserver) {
     noticeObserverList.add(noticeObserver);
-    noticeObserver.Update();
   }
   
   @Override
@@ -40,7 +37,7 @@ public class ServerNotice extends ServerController{
   }
    
   @Override
-  public void NotifyObserver() {
+  protected void NotifyObserver() {
     for(NoticeObserver iter : noticeObserverList) {
       iter.Update();
     }
