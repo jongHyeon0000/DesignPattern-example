@@ -13,3 +13,5 @@ public class LazyInitializationSington {
     return instance;
   }
 }
+
+synchronized
