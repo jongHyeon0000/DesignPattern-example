@@ -23,7 +23,7 @@ package DesignPattern.example.singleton;
 //        두 번째 Thread에서 아직 Read 하지 않아, Working Memory에는 instance가 아직 null인 경우
 //        두 번째 Thread가 synchronized 블록(Line 33)에 들어오게 된다.
 //        
-//        4. 두번째 Thread는 instance를 또 생성하게 된다. 결국 클래스의 불변식(invariant)이 깨져버렸다.
+//        4. 두 번째 Thread는 instance를 또 생성하게 된다. 결국 클래스의 불변식(invariant)이 깨져버렸다.
 //        
 //        5. 따라서 instance는 volatile 키워드를 통해 가시성을 확보해야 한다.
 //        
