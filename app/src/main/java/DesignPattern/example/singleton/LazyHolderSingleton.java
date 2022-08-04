@@ -26,7 +26,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 //              readResolve 메서드를 제공해야 한다. 이렇게 하지 않으면 직렬화된 인스턴스를 역직렬화할 때마다
 //              새로운 인스턴스가 만들어진다. (Effective Java Item.3)
 //
-//           2. 런타임 중 악의적인 리플렉션 코드가 불변식을 깨뜨리기 위한 공격에 대한 방어 코드가 필요하다.(Line 40, 42)
+//           2. 런타임 중 악의적인 리플렉션 코드가 불변식(invariant)을 깨뜨리기 위한 공격에 대한 방어 코드가 필요하다.(Line 40, 42)
 
 
 public class LazyHolderSingleton {

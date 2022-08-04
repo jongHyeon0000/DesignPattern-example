@@ -19,7 +19,7 @@ package DesignPattern.example.singleton;
 //        Main Memory 에는 존재하지 않을 경우(아직 Main Memory에 Write가 이루어지지 않음.)
 //        Main Memory에는 아직 instance가 null 이므로, 두 번째 스레드가 synchronized 블록(Line 33)에 들어오게 된다.
 //        
-//        혹은, 첫번째 Thread가 Main Memory에 instance를 자신이 초기화 한 DoubleCheckedLoadingSingleton으로 Write 했으나,
+//        혹은, 첫번째 Thread가 Main Memory에 초기화 된 instance를 Main Memory로 Write 했으나,
 //        두 번째 Thread에서 아직 Read 하지 않아, Working Memory에는 instance가 아직 null인 경우
 //        두 번째 Thread가 synchronized 블록(Line 33)에 들어오게 된다.
 //        
