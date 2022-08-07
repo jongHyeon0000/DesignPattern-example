@@ -4,7 +4,7 @@ package DesignPattern.example.singleton;
 //        
 //        1. 자바에서의 enum은 C++에서의 EnumClass랑 비슷하지만 더 강력하다.
 //        enum 내부의 값은 public static final로 선언된 인스턴스와 같은 취급을 받는다.
-//        final Modify는 초기화 할 때 이외에는 값 변경이 불가능한 상수와 같은 성질을 지닌다.
+//        final Modify는 초기화 시점 외에는 값 변경이 불가능한 상수와 같은 성질을 지닌다.
 //        따라서 enum은 그 자체로 불변 클래스(Immutable Class)라고 할 수 있다.
 //        
 //        불변 클래스는 Thread-safe 하다.
@@ -15,10 +15,11 @@ package DesignPattern.example.singleton;
 //        그 어떤 스레드도 다른 스레드에 영향을 줄 수 없으니 불변 객체는 안심하고 공유할 수 있다. "
 //        (Effective Java Item.17)
 //        
-//        2. 싱글톤 클래스가 직렬화(Serizalizable)를 구현하지 않더라도,
+//        2. 개발자가 직렬화(Serizalizable)를 구현하지 않더라도,
 //        enum의 직렬화는 JVM이 내부적으로 안전하게 처리해준다.
-//        
-//        3. Constructor 클래스의 newInstance 메소드는 클라이언트가 enum 타입의 아규먼트를
+//        직접 java.lang.enum에 들어가 확인해보면 알 수 있다.
+//
+//        3. java.lang.reflect Constructor 클래스의 newInstance 메소드는 enum 타입의 아규먼트를
 //        전달 할 경우 예외를 던지도록 구현되었기 때문에, 리플렉션 공격에 대한 방어 처리를
 //        신경 쓸 필요가 없다.
 //

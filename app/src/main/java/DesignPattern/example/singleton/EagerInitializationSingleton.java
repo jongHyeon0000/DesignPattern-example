@@ -10,6 +10,7 @@ package DesignPattern.example.singleton;
 //단점 : 싱글톤 객체 사용 유무와 상관없이, 클래스가 로딩되는 시점에 항상 싱글톤 객체가 생성된다.
 //        -> 무거운 싱글톤 객체인 경우 메모리에 부담이 가중된다.(MemoryLeak)
 
+@Deprecated
 public class EagerInitializationSingleton {
   private static EagerInitializationSingleton instance = new EagerInitializationSingleton();
   

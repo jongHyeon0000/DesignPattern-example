@@ -15,6 +15,7 @@ package DesignPattern.example.singleton;
 //단점 : synchronized 블록은, 해당 영역(scope)이나 메소드를 Lock-Unlock 처리하기 때문에 
 //       내부적으로 많은 비용이 발생한다.
 
+@Deprecated
 public class LazyInitializationSynchronizedSingleton {
   private static LazyInitializationSynchronizedSingleton instance;
   
