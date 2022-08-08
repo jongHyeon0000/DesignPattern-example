@@ -15,14 +15,6 @@ abstract public class Dungeon implements Renderable{
     this.timeLimit = timeLimit;
   }
   
-  Dungeon(Dungeon dungeon){
-    this.dungeonName = dungeon.dungeonName;
-    this.level = dungeon.level;
-    this.attackAdvantage = dungeon.attackAdvantage;
-    this.defenceAdvantage = dungeon.defenceAdvantage;
-    this.timeLimit = dungeon.timeLimit;
-  }
-
   public int getLevel(){
     return level;
   }

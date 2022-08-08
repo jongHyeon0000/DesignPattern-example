@@ -1,11 +1,11 @@
 package DesignPattern.example.composite_iterator;
 
 public class Renderer {
-  public static void rendering(DungeonDirectory<?> dungeonDirectory) {
-    mapRendering(dungeonDirectory);
+  public static void rendering(Dungeon dungeon) {
+    mapRendering(dungeon);
   }
   
-  private static void mapRendering(Dungeon dungeonDirectory) {    
-    dungeonDirectory.Rendering();
+  private static void mapRendering(Dungeon dungeon) {    
+    dungeon.Rendering();
   }
 }
