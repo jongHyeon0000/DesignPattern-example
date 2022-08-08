@@ -6,7 +6,7 @@ package DesignPattern.example.singleton;
 //       
 //단점 :  -> 멀티 쓰레드 환경에서 Thread-safe을 보장할 수 없다.(Line.17)
 
-
+@Deprecated
 public class LazyInitializationSington {
   private static LazyInitializationSington instance;
   

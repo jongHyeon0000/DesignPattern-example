@@ -15,7 +15,7 @@ public class Main {
           "CCCAAA"
       };
       
-   // String[]  ->  Stream<String[]>  ->  Stream<Stream<String>> ->  Stream<Long> -> List<Long>
+   // String[]  ->  Stream<String[]>  ->  Stream<Stream<String>>  ->  Stream<Long> -> List<Long>
       System.out.println(Arrays.stream(alphabetList).
           map(s -> Arrays.stream(s.split("")).distinct().count()).collect(Collectors.toList()));
       
