@@ -9,10 +9,9 @@ public class DungeonDirectory<T extends Dungeon> extends Dungeon{
     super(dungeonName, attackAdventage, defenceAdvantage, timeLimit);
   }
 
-  @SuppressWarnings("unchecked")
-  public void addDungeon(Dungeon dungeon){
+  public void addDungeon(T dungeon){
     dungeon.setLevel(level);
-    dungeonList.add((T) dungeon);
+    dungeonList.add(dungeon);
   }
   
   @SuppressWarnings("unchecked")
@@ -23,7 +22,7 @@ public class DungeonDirectory<T extends Dungeon> extends Dungeon{
       iter.setLevel(dungeonDirectory.getLevel());
     }
     
-    dungeonList.add((T) dungeonDirectory);
+    dungeonList.add( (T) dungeonDirectory);
   }
 
   public void removeDungeon(Dungeon dungeon){
@@ -53,8 +52,8 @@ public class DungeonDirectory<T extends Dungeon> extends Dungeon{
     System.out.printf("    Next Dungeon's Time Limit : %d\n", getRemainingClearTime());
     System.out.println("<<--------------------------------------------------->>\n");
     
-    for(Iterator<T> iter = this.getIterator(); iter.hasNext();) {
-      iter.next().Rendering();
+    for(Dungeon iter : dungeonList) {
+      iter.Rendering();
     }
   }
 

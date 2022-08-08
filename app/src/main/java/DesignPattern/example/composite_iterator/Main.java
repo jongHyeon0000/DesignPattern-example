@@ -17,5 +17,9 @@ public class Main {
     dungeonB.addDungeon(new Cave("Cave 2", 60, 35, 110));
 
     Renderer.rendering(dungeonA);
+    
+    for(Iterator<? extends Dungeon> iter = dungeonB.getIterator(); iter.hasNext();) {
+      iter.next().Rendering();
+    }
   }
 }
