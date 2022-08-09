@@ -14,7 +14,7 @@
 둘 이상의 CPU가 탑재된 컴퓨터에서 실행 시 선언한 변수의 값(instance : DoubleCheckedLoadingSingleton)이
 Main Memory에만 존재하는 것이 아니라, CPU 캐시(cahce)라고 하는 영역에도 존재한다.
 이는 CPU가 Main Memory에서 값을 읽고(Read), 다시 쓰고(Write) 하는 시간을 아끼기 위함이다.
-문제는 CPU cache에서 새로 정의된 값이 Main Memory에 언제 Read 할지 모른다는 것이다. (가시성 이슈, Visibility Issue)
+문제는 CPU cache에서 새로 정의된 값이 Main Memory에 언제 Read 할지 모른다는 것이다. **(가시성 이슈, Visibility Issue)**
 >          
 > 1. 첫번째 Thread가 instance 를 생성하고 synchronized block을 벗어난다(Line 43).
 > 
@@ -27,9 +27,9 @@ Main Memory에만 존재하는 것이 아니라, CPU 캐시(cahce)라고 하는 
 >       
 > 4. 두 번째 Thread는 instance를 또 생성하게 된다. 결국 클래스의 불변식(Invariant)이 깨져버렸다.
 >       
-> 5. 따라서 instance는 volatile 키워드를 통해 가시성(Visibility)을 확보해야 한다.
+> 5. 따라서 instance는 volatile 키워드를 통해 **가시성(Visibility)**을 확보해야 한다.
         
-    그럼 정말 DoubleCheckedLoading 싱글톤 패턴은 멀티 쓰레드 환경에서 안전한가?
-    volatile 제어자(Modifier)는 가시성(Visibility)은 확보하지만, 원자성(Atomicity)은 확보하지 못한다.
+그럼 정말 DoubleCheckedLoading 싱글톤 패턴은 멀티 쓰레드 환경에서 안전한가?  
+volatile 제어자(Modifier)는 가시성(Visibility)은 확보하지만, **원자성(Atomicity)**은 확보하지 못한다.
         
-    자세한 설명은 구글링을 이용하자
+자세한 설명은 구글링을 이용하자
