@@ -17,8 +17,8 @@ public class Main {
     HudRenderingDecorator hudRenderingWithWarning = new HudRenderingWithWarning(hudRenderer);
     hudRenderingWithWarning.Rendering();
     
-    System.out.println();
-    System.out.println();
+   // System.out.println();
+ //   System.out.println();
     
     HudRenderingDecorator hudRenderingWithPercentAndWarning =
         new HudRenderingWithWarning(new HudRenderingWithPercent(hudRenderer));

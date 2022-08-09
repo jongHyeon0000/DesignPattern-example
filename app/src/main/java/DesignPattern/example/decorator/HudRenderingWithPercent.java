@@ -17,4 +17,9 @@ public class HudRenderingWithPercent extends HudRenderingDecorator{
       hudRenderer.getHp().getHpPercentage(), '%',
         hudRenderer.getMp().getMpPercentage(), '%');
   }
+  
+  
+  private void Init() {
+	  
+  }
 }
