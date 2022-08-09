@@ -44,38 +44,36 @@
 
   - 불변 클래스(Immutable Class)
       객체 내부의 값을 처음 객체가 생성 될 때 외에는 수정, 변경할 수 없는 클래스를 말한다.
-
       안정성을 검증받은 불변 클래스를 설계하는 법은 다음과 같다.
       <pre>
       <code>
-        Class People{
-        private int age;
-        private String name;
+        class People{
+          int age;
+          String name;
 
-        People(int age, String name){
-          this.age = age;
-          this.name = name;
+          People(int age, String name){
+            this.age = age;
+            this.name = name;
+          }
+
+
+          public void setAge(int age){
+            this.age = age;
+          }
+
+          public void setName(String name){
+            this.name = name
+          }
         }
-
-
-        public void setAge(int age){
-          this.age = age;
-        }
-
-        public void setName(String name){
-          this.name = name
-        }
-      }
       </code>
       </pre>
 
       1. 객체의 상태를 변경하는 메서드(변경자, setter)를 제공하지 않는다.
-
       <pre>
       <code>
-        Class People{
-          private int age;
-          private String name;
+        class People{
+          int age;
+          String name;
 
           People(int age, String name){
             this.age = age;
@@ -85,7 +83,75 @@
       </code>
       </pre>
 
+      2. 클래스를 확장(extend)할 수 없도록 한다. 즉 상속을 문법적으로 금지한다.
       <pre>
       <code>
+        // 이 클래스는 절대 재정의 될 수 없음을 명확하게 전달한다.
+        final class People{
+          int age;
+          String name;
+
+          People(int age, String name){
+            this.age = age;
+            this.name = name;
+          }
+        }
       </code>
       </pre>
+
+      3. 모든 필드를 final로 선언한다.
+      <pre>
+      <code>
+        final class People{
+          // 이 클래스의 필드는 절대 변경되지 않음을 명확하게 전달한다.
+          final int age;
+          final String name;
+
+          People(int age, String name){
+            this.age = age;
+            this.name = name;
+          }
+        }
+      </code>
+      </pre>
+
+      4. 모든 필드의 접근 제어자(Access Modifier)를 private으로 선언한다.
+      <pre>
+      <code>
+        final class People{
+          // 이 클래스의 필드는 외부에서 접근할 수 없게 문법적으로 안전하게 보호받고 있다.
+          // 외부 클라이언트는 이 필드를 직접 이용하지 못하니, People 클래스는 내부 구현을 수정하는 것에 부담이 줄어든다.
+          // (SOLID, Open Closed Principle), (GRASP, Low coupling), 정보 은닉(information hiding)
+          private final int age;
+          private final String name;
+
+          People(int age, String name){
+            this.age = age;
+            this.name = name;
+          }
+        }
+      </code>
+      </pre>
+
+      5. 자신 외에는 내부의 가변 컴포넌트에 접근할 수 없도록 한다.
+      <pre>
+      <code>
+        final class People{
+          private final int age;
+          private final String name;
+
+          // 불변 클래스 내부의 가변 객체가 있다면 반드시 이 객체의 참조(Reference)를 얻을 수 없게 해야한다.
+          private Book book = new Book();
+
+          People(int age, String name){
+            this.age = age;
+            this.name = name;
+          }
+        }
+
+        class Book{
+          ...
+        }
+      </code>
+      </pre>
+
