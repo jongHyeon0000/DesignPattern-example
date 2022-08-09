@@ -1,5 +1,7 @@
 package DesignPattern.example.singleton;
 
+import java.util.Arrays;
+
 //장점 :  -> enum 문법이 제공하는 모든 장점을 누릴 수 있다.
 //        
 //        1. 자바에서의 enum은 C++에서의 EnumClass랑 비슷하지만 더 강력하다.
@@ -31,4 +33,32 @@ package DesignPattern.example.singleton;
 
 public enum EnumSingleton {
   INSTANCE,
+}
+
+class Stack<T>{
+  private int size;
+  private Object[] elements;
+  
+  Stack(int capacity) {
+    size = 0;
+    elements = new Object[capacity];
+  }
+  
+  public void push(T t) {
+    ensureCapacity();
+    elements[++size] = t;
+  }
+  
+  private void ensureCapacity() {
+    if(elements.length <= size - 1) {
+      elements = Arrays.copyOf(elements, elements.length * 2 + 1);
+    }
+  }
+  
+  public T pop(){    
+    @SuppressWarnings("unchecked") T result = (T) elements[size];
+    elements[size--] = null;
+    
+    return result;
+  }
 }
