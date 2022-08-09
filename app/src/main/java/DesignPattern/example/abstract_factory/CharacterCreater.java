@@ -1,4 +1,4 @@
-package DesignPattern.example.abstract_method;
+package DesignPattern.example.abstract_factory;
 
 abstract public class CharacterCreater {
   abstract public Monitor KnifeCreater(int cost, int weight);

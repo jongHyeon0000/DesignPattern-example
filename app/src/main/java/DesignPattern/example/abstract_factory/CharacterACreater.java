@@ -1,4 +1,4 @@
-package DesignPattern.example.abstract_method;
+package DesignPattern.example.abstract_factory;
 
 public class CharacterACreater extends CharacterCreater{
   @Override

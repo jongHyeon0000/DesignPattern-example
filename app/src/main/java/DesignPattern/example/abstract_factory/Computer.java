@@ -1,8 +1,8 @@
-package DesignPattern.example.abstract_method;
+package DesignPattern.example.abstract_factory;
 
 abstract public class Computer {
-  private int cost;
-  private int weight;
+  protected int cost;
+  protected int weight;
 
   Computer(int cost, int weight){
     this.cost = cost;
