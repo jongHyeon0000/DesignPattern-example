@@ -1,19 +1,19 @@
 package DesignPattern.example.abstract_factory;
 
-abstract public class Computer {
-  protected int cost;
-  protected int weight;
-
-  Computer(int cost, int weight){
-    this.cost = cost;
-    this.weight = weight;
+public class Computer {
+  private Keyboard keyboard;
+  private Mouse mouse;
+  private Monitor monitor;
+  
+  Computer(Keyboard keyboard, Mouse mouse, Monitor monitor){
+    this.keyboard = keyboard;
+    this.mouse = mouse;
+    this.monitor = monitor;
   }
   
-  public int getCost(){
-    return cost;
-  }
-
-  public int getWeight(){
-    return weight;
+  public void PrintComputerSpecifications() {
+    System.out.println(keyboard);
+    System.out.println(mouse);
+    System.out.println(monitor);
   }
 }

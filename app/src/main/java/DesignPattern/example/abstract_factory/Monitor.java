@@ -1,54 +1,53 @@
 package DesignPattern.example.abstract_factory;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.function.Supplier;
 
-abstract public class Monitor extends Computer{
-  private int inch;
+abstract public class Monitor{
+  protected int cost;
+  protected int weight;
+  protected int inch;
   
   Monitor(int cost, int weight, int inch){
-    super(cost, weight);
-    
+    this.cost = cost;
+    this.weight = weight;
     this.inch = inch;
   }
   
-  public int getInch() {
-  	return inch;
-  }
-  
-  @SuppressWarnings("unchecked")
-	public static <V extends Monitor> Map<Integer, V> getRanking(Monitor...monitors) {
-  	Map<Integer, V> map = new TreeMap<Integer, V>();
-  	
-  	for(Monitor m : monitors) {
-  		int star = (m.getInch() * 1000 + m.getWeight() * 10) - m.getCost();
-
-  		map.put(star, (V) m);
-  	}
+  public final static class CreateMonitorRank{
+    @FunctionalInterface
+    private interface DefaultStarCalculus<T> {
+      int getStar(T cost, T weight, T inch);
+    }
     
-    return map;
-  }
-  
-  @SuppressWarnings("unchecked")
-	public static <V extends Monitor> Map<Integer, V> getRanking(Comparator<? super Integer> comparator, Monitor...monitors) {
-  	Map<Integer, V> map = new TreeMap<Integer, V>(comparator);
-  	
-  	for(Monitor m : monitors) {
-  		int star = (m.getInch() * 1000 + m.getWeight() * 10) - m.getCost();
-
-  		map.put(star, (V) m);
-  	}
+    private static final DefaultStarCalculus<Integer> defalutStarCalculus = (cost, weight, inch) -> (inch * 1000 + weight * 10) - cost;
     
-    return map;
-  }
-  	
+    @SafeVarargs // item 32
+    public static <V extends Monitor> Map<Integer, V> getRanking(DefaultStarCalculus<Integer> starCalculus, Comparator<? super Integer> comparator, V...monitors){
+      Map<Integer, V> map = new TreeMap<Integer, V>(comparator);
+      
+      for(V monitorElement : monitors) {
+        map.put(starCalculus.getStar(monitorElement.cost, monitorElement.weight, monitorElement.inch), monitorElement);
+      }
+      
+      return map;
+    }
+    
+    @SafeVarargs
+    public static <V extends Monitor> Map<Integer, V> getRanking(DefaultStarCalculus<Integer> starCalculus, V...monitors){
+      return CreateMonitorRank.getRanking(starCalculus, Integer::compare, monitors);
+    }
+    
+    @SafeVarargs
+    public static <V extends Monitor> Map<Integer, V> getRanking(Comparator<? super Integer> comparator, V...monitors) {
+      return CreateMonitorRank.getRanking(defalutStarCalculus, comparator,  monitors);
+    }
+    
+    @SafeVarargs // item 19
+    public static <V extends Monitor> Map<Integer, V> getRanking(V...monitors) {
+      return CreateMonitorRank.getRanking(defalutStarCalculus, Integer::compare, monitors);
+    }
   }
 }
+

@@ -5,4 +5,8 @@ public class SamsungMonitor extends Monitor{
     super(cost, weight, inch);
   }
 
+  @Override
+  public String toString() {
+    return "I'm SamsungMonitor";
+  }
 }

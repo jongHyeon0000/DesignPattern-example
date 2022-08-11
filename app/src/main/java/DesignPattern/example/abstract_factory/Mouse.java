@@ -1,10 +1,9 @@
 package DesignPattern.example.abstract_factory;
 
-abstract public class Mouse<T extends Mouse<T>> extends Computer implements BluetoothSupport<T>{
-  private String modelNumber;
+abstract public class Mouse implements BluetoothSupport<Mouse>{
+  protected String modelNumber;
   
   Mouse(int cost, int weight, String modelNumber){
-    super(cost, weight);
     this.modelNumber = modelNumber;
   }
 

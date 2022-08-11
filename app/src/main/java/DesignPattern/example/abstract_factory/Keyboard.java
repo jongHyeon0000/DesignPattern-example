@@ -2,11 +2,10 @@ package DesignPattern.example.abstract_factory;
 
 import java.util.Objects;
 
-abstract public class Keyboard extends Computer{
-  private String name;
+abstract public class Keyboard{
+  protected String name;
   
-  Keyboard(int cost, int weight, String name){
-    super(cost, weight);
+  Keyboard(String name){
     this.name = name;
   }
 
@@ -28,9 +27,8 @@ abstract public class Keyboard extends Computer{
       return 0;
     }
     
-    // int result = 31 * Objects.hashCode(name);
     int i = Objects.hashCode(name);
-    int result = (i << 5) - i;
+    int result = (i << 5) - i; // int result = 31 * Objects.hashCode(name);
   
     return result;
   }
