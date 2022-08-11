@@ -21,9 +21,9 @@ abstract public class Monitor{
       int getStar(T cost, T weight, T inch);
     }
     
-    private static final DefaultStarCalculus<Integer> defalutStarCalculus = (cost, weight, inch) -> (inch * 1000 + weight * 10) - cost;
+    private static final DefaultStarCalculus<Integer> defalutStarCalculus = (cost, weight, inch) -> (inch * 100000) - cost - (weight * 10000);
     
-    @SafeVarargs // item 32
+    @SafeVarargs // item 3
     public static <V extends Monitor> Map<Integer, V> getRanking(DefaultStarCalculus<Integer> starCalculus, Comparator<? super Integer> comparator, V...monitors){
       Map<Integer, V> map = new TreeMap<Integer, V>(comparator);
       
@@ -44,7 +44,7 @@ abstract public class Monitor{
       return CreateMonitorRank.getRanking(defalutStarCalculus, comparator,  monitors);
     }
     
-    @SafeVarargs // item 19
+    @SafeVarargs // item 4
     public static <V extends Monitor> Map<Integer, V> getRanking(V...monitors) {
       return CreateMonitorRank.getRanking(defalutStarCalculus, Integer::compare, monitors);
     }

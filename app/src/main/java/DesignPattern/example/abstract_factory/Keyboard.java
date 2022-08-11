@@ -9,6 +9,7 @@ abstract public class Keyboard{
     this.name = name;
   }
 
+  // item 1
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
@@ -20,7 +21,8 @@ abstract public class Keyboard{
     Keyboard other = (Keyboard) obj;
     return Objects.equals(name, other.name);
   }
-
+  
+  // item 2
   @Override
   public int hashCode() {
     if (name == null) {

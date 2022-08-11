@@ -1,6 +1,6 @@
 package DesignPattern.example.abstract_factory;
 
-public class Computer {
+public class Computer{
   private Keyboard keyboard;
   private Mouse mouse;
   private Monitor monitor;
@@ -15,5 +15,17 @@ public class Computer {
     System.out.println(keyboard);
     System.out.println(mouse);
     System.out.println(monitor);
+  }
+
+  public Keyboard getKeyboard() {
+    return keyboard;
+  }
+
+  public Mouse getMouse() {
+    return mouse;
+  }
+
+  public Monitor getMonitor() {
+    return monitor;
   }
 }
