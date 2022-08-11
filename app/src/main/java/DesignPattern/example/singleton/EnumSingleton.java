@@ -56,9 +56,9 @@ class Stack<T>{
   }
   
   public T pop(){    
-    @SuppressWarnings("unchecked") T result = (T) elements[size];
-    elements[size--] = null;
+    Stack<T> temp = new Stack<>(elements.length);
+    temp = this; // 깊은 복사(Deep Copy)가 구현 되었다고 가정한다.
     
-    return result;
+    return temp.pop();
   }
 }
