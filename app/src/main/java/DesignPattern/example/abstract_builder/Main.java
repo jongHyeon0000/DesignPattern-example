@@ -1,10 +1,13 @@
 package DesignPattern.example.abstract_builder;
 
+import DesignPattern.example.abstract_builder.NPC.NPC_Modifier;
+import DesignPattern.example.abstract_builder.NPC.NPC_Type;
+
 public class Main {
   public static void main(String[] args) {
-    Monster monster = new Monster1.Builder("monster", MonsterType.TYPE1)
-         .setCost(10).setHelper(true).setMonsterModifier(MonsterModifier.MODIFIER2).Build();
+    NPC npc1 = new Village_NPC.Builder("monster", NPC_Type.HELPER)
+         .setCost(10).setHelper(true).setNpcModifier(NPC_Modifier.NEUTRAL).Build();
     
-    monster.toString();
+    npc1.toString();
   }
 }
