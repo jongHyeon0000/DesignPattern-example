@@ -44,6 +44,7 @@ abstract public class Monitor{
       return CreateMonitorRank.getRanking(defalutStarCalculus, comparator,  monitors);
     }
     
+    // 가변 파라미터만 사용은 위험 -> 수정 예정
     @SafeVarargs // item 4
     public static <V extends Monitor> Map<Integer, V> getRanking(V...monitors) {
       return CreateMonitorRank.getRanking(defalutStarCalculus, Integer::compare, monitors);

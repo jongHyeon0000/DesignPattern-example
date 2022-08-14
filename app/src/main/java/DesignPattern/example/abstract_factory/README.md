@@ -113,8 +113,7 @@ public boolean equals(Object o){
 > 단, 다른 객체에 대해서는 다른 값을 반환해야 해시테이블의 성능이 좋아진다.
 
 첫 번째와 세 번째 규약은 해시 함수와 해시 테이블의 원리를 안다면 자연스레 알고 있었을 것 이다.  
-문제는 순수 자바 문법의 영역인 두 번째 규약인데, 만약 어떤 클래스의 equals 메서드를 재정의 하여 동치성 비교 방식을 논리적 동치성 비교 방식으로  
-바꾸었다면, hashCode 메서드 또한 논리적 동치성 비교 방식으로 동작해야 한다.
+문제는 순수 자바 문법의 영역인 두 번째 규약인데, 만약 어떤 클래스의 equals 메서드를 재정의 하여 동치성 비교 방식을 논리적 동치성 비교 방식으로 바꾸었다면, hashCode 메서드 또한 논리적 동치성 비교 방식으로 동작해야 한다.
   
 만약 hashCode를 사용하는 컬렉션(HashMap, HashSet)의 원소로 사용하는 객체가 이 두 번째 규약을 어기게 되면, 심각한 문제가 발생한다.  
 오버라이딩 된 hashCode 메소드를 주석 처리하고, testMethod()를 호출 해보자.
@@ -161,8 +160,7 @@ public boolean equals(Object o){
 
 전달하고 싶은 내용은 디폴트 메서드가 나쁜 문법도 아니고, 위험한 문법도 아니지만 여전히 인터페이스 설계, 수정은 세심한 주의가 필요하다는 것이다.
 
-특히 컬렉션 인터페이스들이 람다식의 활용을 위해 람다식을 파라미터로 받는 디폴트 메서드가 많이 생겼는데, 아래 내용은 디폴트 메서드가 호환성 해결에  
-만능이 아니라는 것을 보여주는 글이다.
+특히 컬렉션 인터페이스들이 람다식의 활용을 위해 람다식을 파라미터로 받는 디폴트 메서드가 많이 생겼는데, 아래 내용은 디폴트 메서드가 호환성 해결에 만능이 아니라는 것을 보여주는 글이다.
 
 >Collection 인터페이스의 removeIf 메서드를 살펴보자.  
 이 메서드는 Predicate 형식의 함수형 인터페이스 규격에 맞는 람다식을 입력받는다.  
@@ -184,5 +182,29 @@ public boolean equals(Object o){
 이펙티브 자바에서는 기존 인터페이스에 디폴트 메서드를 추가할 때 마주치게 될 이슈와 트러블 슈팅들에 대해 얘기하고 있다.
   
 생각보다 심오한 내용이지만, 인터페이스를 주로 구현하여 사용하던 기존 구현 클래스의 상황을 고려하는 것이 핵심이다.  
-가장 좋은 대안은 인터페이스를 상속 받는 구현체를 API 개발자가 임의로 3개정도 만들어서 가지고 놀아보는 것이다.  
+가장 좋은 대안은 인터페이스를 상속 받는 구현체를 API 개발자가 임의로 3개정도 만들어서 예시로 구현을 해 보는 것이다.  
 인터페이스를 설계 할 때 가져야 할 덕목들에 대한 이야기가 많다. 자세한 내용은 item 22, 23을 참조하자.
+
+# Monitor
+
+시작 하기 전 제네릭(Generic) 문법은 자바 기초 문법 교재나 자바 튜닝 교재 등등 수준에 상관 없이 가장 어렵고 심오한 문법으로 꼽습니다.  
+이하 내용은 아직 저에게도 어려운 내용이므로, 설명에 틀린 부분이 있더라도 양해 부탁바랍니다.  
+또한 C++의 템플릿과 자바의 제네릭은 지향점과 문법, 기술적 구현 등등 많은 부분이 상이하므로 C++의 템플릿과의 비교는 절대 안됩니다.
+경험입니다..
+
+**용어 정리**
+|한글 용어|영문 용어|예시|
+|------|---|---|
+|매개변수화 타입|parameterized type|List\<String>, Map\<Car.class, String>|
+|실제 타입 매개변수|actual type parameter|String, Integer|
+|제네릭 타입|generic type|List\<E>, Map<K, V>|
+|정규 타입 매개변수|formal type parameter|E, T, V, K|
+|비한정적 와일드카드 타입|unbounded wildcard type|List\<?>, Set\<?>|
+|로 타입|raw type|List, Map, Set|
+|한정적 타입 매개변수|bounded type parameter|\<E extends Number>, \<T extends Iterable>|
+|재귀적 타입 한정|recirsove type bound|\<E extends Iterator\<E>>, <T extends Comparable\<T>>|
+|한정적 와일드카드 타입|bounded wildcard type|List\<? extends Number>, Iterable<? super Integer>|
+|제네릭 메서드|generic method|static \<E> List<E> asList(E[] a), static \<V extends Monitor> Map<Integer, V> getRanking(...)|
+|타입 토큰|type token|String.class, Keyboard.class|
+
+## 유연하고 클라이언트 친화적인 제네릭(Generic) 문법 도입
