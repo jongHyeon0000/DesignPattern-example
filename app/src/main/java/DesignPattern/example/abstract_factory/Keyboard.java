@@ -1,5 +1,7 @@
 package DesignPattern.example.abstract_factory;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 abstract public class Keyboard{
@@ -34,10 +36,18 @@ abstract public class Keyboard{
   
     return result;
   }
-
+  
   @Override
   public String toString() {
     return "Keyboard [name=" + name + "]";
   }
 }
- 
+
+
+class Test{
+	public static void testMethod() {
+		Map<Keyboard, String> m = new HashMap<>();
+		m.put(new SamsungKeyboard("FC-770"), "JongHyeon");
+		m.get(new SamsungKeyboard("FC-770"));
+	}
+}
