@@ -1,4 +1,4 @@
-package DesignPattern.example.abstract_factory;
+package DesignPattern.example.abstract_factory.monitor;
 
 import java.util.Comparator;
 import java.util.Map;
@@ -38,7 +38,7 @@ abstract public class Monitor {
 
       return map;
     }
-
+                               
     @SafeVarargs
     public static <V extends Monitor> Map<Integer, V> getRanking(
         DefaultStarCalculus<Integer> starCalculus, V... monitors) {

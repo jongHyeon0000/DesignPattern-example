@@ -1,4 +1,4 @@
-package DesignPattern.example.abstract_factory;
+package DesignPattern.example.abstract_factory.bluetooth;
 
 import java.io.IOException;
 

@@ -1,14 +1,14 @@
-package DesignPattern.example.abstract_factory;
+package DesignPattern.example.abstract_factory.mouse;
 
 import java.io.IOException;
 
-public class SamsungMouse extends Mouse {
-  SamsungMouse(int cost, int weight, String modelNumber) {
+public class AppleMouse extends Mouse {
+  public AppleMouse(int cost, int weight, String modelNumber) {
     super(cost, weight, modelNumber);
   }
 
   @Override
-  public SamsungMouse pairing() throws IOException {
+  public AppleMouse pairing() throws IOException {
     // Pairing Logic...
     System.out.println("Pairing Logic...");
     // Pairing Logic...
@@ -24,8 +24,9 @@ public class SamsungMouse extends Mouse {
   }
 
   @Override
-  @Deprecated
-  public SamsungMouse autoPairing() throws IOException, IllegalAccessException {
-    throw new UnsupportedOperationException();
+  public AppleMouse autoPairing() throws IOException, IllegalAccessException {
+    // Autopairing Logic...
+
+    return this;
   }
 }

@@ -1,11 +1,11 @@
-package DesignPattern.example.abstract_builder;
+package DesignPattern.example.abstract_builder.npc;
 
 abstract public class NPC {
-  enum NPC_Type {
+  public enum NPC_Type {
     MERCHANT, HELPER, QUEST
   }
 
-  enum NPC_Modifier {
+  public enum NPC_Modifier {
     FRIENDLY, NEUTRAL, HOSTILE
   }
 

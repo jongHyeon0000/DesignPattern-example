@@ -1,4 +1,4 @@
-package DesignPattern.example.abstract_factory;
+package DesignPattern.example.abstract_factory.keyboard;
 
 import java.util.HashMap;
 import java.util.Map;

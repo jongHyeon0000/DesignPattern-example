@@ -1,7 +1,7 @@
-package DesignPattern.example.abstract_factory;
+package DesignPattern.example.abstract_factory.monitor;
 
 public class AppleMonitor extends Monitor{
-  AppleMonitor(int cost, int weight, int inch){
+  public AppleMonitor(int cost, int weight, int inch){
     super(cost, weight, inch);
   }
   

@@ -1,7 +1,7 @@
-package DesignPattern.example.abstract_factory;
+package DesignPattern.example.abstract_factory.keyboard;
 
 public class SamsungKeyboard extends Keyboard{
-  SamsungKeyboard(String name){
+  public SamsungKeyboard(String name){
     super(name);
   }
 

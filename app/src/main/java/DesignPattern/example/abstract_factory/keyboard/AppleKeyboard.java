@@ -1,7 +1,7 @@
-package DesignPattern.example.abstract_factory;
+package DesignPattern.example.abstract_factory.keyboard;
 
 public class AppleKeyboard extends Keyboard{
-  AppleKeyboard(String name){
+  public AppleKeyboard(String name){
     super(name);
   }
   

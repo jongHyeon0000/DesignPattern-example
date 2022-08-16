@@ -1,11 +1,15 @@
-package DesignPattern.example.abstract_factory;
+package DesignPattern.example.abstract_factory.computer;
+
+import DesignPattern.example.abstract_factory.keyboard.Keyboard;
+import DesignPattern.example.abstract_factory.monitor.Monitor;
+import DesignPattern.example.abstract_factory.mouse.Mouse;
 
 public class Computer{
   private Keyboard keyboard;
   private Mouse mouse;
   private Monitor monitor;
   
-  Computer(Keyboard keyboard, Mouse mouse, Monitor monitor){
+  public Computer(Keyboard keyboard, Mouse mouse, Monitor monitor){
     this.keyboard = keyboard;
     this.mouse = mouse;
     this.monitor = monitor;

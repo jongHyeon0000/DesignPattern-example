@@ -1,6 +1,11 @@
 package DesignPattern.example.abstract_factory;
 
 import java.util.Map;
+import DesignPattern.example.abstract_factory.computer.Computer;
+import DesignPattern.example.abstract_factory.computer_factory.ComputerFactory;
+import DesignPattern.example.abstract_factory.computer_factory.HansungComputerFactory;
+import DesignPattern.example.abstract_factory.computer_factory.MsiComputerFactory;
+import DesignPattern.example.abstract_factory.monitor.Monitor;
 
 public class Main {
   public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package DesignPattern.example.abstract_builder;
+package DesignPattern.example.abstract_builder.npc;
 
 public class Field_NPC extends NPC{
   public Field_NPC(Builder builder) {
@@ -6,12 +6,12 @@ public class Field_NPC extends NPC{
   }
 
   static public class Builder extends NPC.Builder<Builder>{
-    Builder(String name, NPC_Type monsterType) {
+    public Builder(String name, NPC_Type monsterType) {
       super(name, monsterType);
     }
     
     @Override
-    protected NPC Build() {
+    public NPC Build() {
       return new Field_NPC(this);
     }
     
