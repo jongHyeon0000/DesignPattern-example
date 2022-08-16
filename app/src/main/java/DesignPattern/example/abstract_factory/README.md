@@ -187,12 +187,7 @@ public boolean equals(Object o){
 
 # Monitor
 
-시작 하기 전 제네릭(Generic) 문법은 자바 기초 문법 교재나 자바 튜닝 교재 등등 수준에 상관 없이 가장 어렵고 심오한 문법으로 꼽습니다.  
-이하 내용은 아직 저에게도 어려운 내용이므로, 설명에 틀린 부분이 있더라도 양해 부탁바랍니다.  
-또한 C++의 템플릿과 자바의 제네릭은 지향점과 문법, 기술적 구현 등등 많은 부분이 상이하므로 C++의 템플릿과의 비교는 절대 안됩니다.
-
-
-**용어 정리**
+### **용어 정리**
 |한글 용어|영문 용어|예시|
 |------|---|---|
 |매개변수화 타입|parameterized type|List\<String>, Map\<Car.class, String>|
@@ -247,9 +242,10 @@ public static void simplePushMethod() {
 	List<Object> list = new ArrayList<String>(); // Type mismatch: cannot convert from ArrayList<String> to List<Object>
 }
 ```
-
+배열은 실체화(reify)된다. 런타임에도 자신이 담기로 한 타입을 인지하고 확인한다.
+  
 array는 Object 타입을 받을 수 있는 배열이다. {10, 20} 은 Integer 타입으로 오토박싱(auto boxing) 되고,  
-Integer는 Object의 하위 타입 이므로, 문법 상 문제가 없다.
+Integer는 Object의 하위 타입 이다. 배열은 런
 
 배열이 유연해 보인다면, 이제 다음 예제를 살펴보자.
 
@@ -262,9 +258,15 @@ public static void simplePushMethod() {
 
 예상과 달리 배열에 원소(element)를 넣으려 할 때, ArrayStoreException이 발생한다.  
 당연하게도 Long 배열에 String 타입을 넣으려 했기 때문이다.  
-objectArray
+    
+object 클래스는 모든 클래스의 상위 타입 이기 때문에, 어떤 타입이든 받을 수 있다.  
+우리는 객체지향 프로그래밍의 유연함을 얻었지만, 타입 안정성은 잃었다.  
+언제 어디서 ClassCastException이 나올지 모르는 위험한 코드다.
 
-정적 유틸리티 메서드는 주로 정적 도우미 클래스에 담겨져 있는 경우가 많다. Collections 클래스의 정렬(sort), 탐색(search) 메서드가 대표적이다.  
-다음 예제는 스택과 Object 타입의 파라미터 하나를 받아 스택에 push 해주는 간단한 정적 도우미 메서드다.
+
+
+
+      정적 유틸리티 메서드는 주로 정적 도우미 클래스에 담겨져 있는 경우가 많다. Collections 클래스의 정렬(sort), 탐색(search) 메서드가 대표적이다.  
+      다음 예제는 스택과 Object 타입의 파라미터 하나를 받아 스택에 push 해주는 간단한 정적 도우미 메서드다.
 
 
