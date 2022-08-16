@@ -1,0 +1,1 @@
+팩토리 메소드 패턴(Factory Method Pattern)
