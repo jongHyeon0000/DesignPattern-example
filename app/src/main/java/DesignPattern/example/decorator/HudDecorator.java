@@ -1,16 +1,15 @@
 package DesignPattern.example.decorator;
 
-public class HudDecorator extends HudRenderer{
-	private HudRenderer hudRenderer;
-	
-	public HudDecorator(HudRenderer hudRenderer) {
-		super(hudRenderer.getHp(), hudRenderer.getMp());
-		this.hudRenderer = hudRenderer;
-	}
+public class HudDecorator extends HudRenderer {
+  private HudRenderer hudRenderer;
 
-	@Override
-	public void render() {
-		hudRenderer.render();
-	}
+  public HudDecorator(HudRenderer hudRenderer) {
+    super(hudRenderer.getHp(), hudRenderer.getMp());
+    this.hudRenderer = hudRenderer;
+  }
 
+  @Override
+  public void render() {
+    hudRenderer.render();
+  }
 }
