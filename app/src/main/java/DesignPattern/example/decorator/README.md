@@ -137,7 +137,7 @@ addAll()의 내부 구현은 add()에 의존한다.
 자신의 상위 클래스(HashSet)의 추상화 수준을 전혀 누리지 못하고, 오히려 상위 클래스 HashSet의 구현에 대해 강하게 의존하고 있다.  
 **(SOLID, Dependency Inversion : 의존 관계 역전 원칙) 위배**
 
-자바 라이브러리가 업데이트 되어서 HashSet의 addAll() 메소드의 구현이 바뀌었다고 하자. 우리가 만든 InstrumentedHashSet 클래스는 이 사실을 알 방법이 없다. 상속받은 HashSet의 기존 메소드는 InstrumentedHashSet 객체에서도 쓸 수 있으니, 새롭게 만든 메소드와 충돌해 언제 InstrumentedHashSet 클래스를 망가트릴지 모른다. 기능 추가는 힘들어지고, 코드 유지보수 비용은 계속 늘어난다.  
+자바 라이브러리가 업데이트 되어서 HashSet의 addAll() 메소드의 구현이 바뀌었다고 하자. 우리가 만든 InstrumentedHashSet 클래스는 이 사실을 알 방법이 없다. 상속받은 HashSet의 기존 메소드는 InstrumentedHashSet 객체에서도 쓸 수 있으니, 새롭게 추가된 메소드와 충돌해 언제 InstrumentedHashSet 클래스를 망가트릴지 모른다. 기능 추가는 힘들어지고, 코드 유지보수 비용은 계속 늘어난다.  
 **(개방-폐쇄 원칙 위배)**  
   
 또한 상위 모듈에 하위 모듈이 의존하게 되면 생기는 가장 고통스러운 점은 디버깅이 쉽지 않다는 것이다. 버그가 발생한 지점을 찾기 위해 상위 클래스(HashSet)의 호출 스택까지 올라가는건 어떤 개발자도 바라지 않을것이다.
