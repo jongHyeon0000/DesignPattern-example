@@ -150,7 +150,7 @@ addAll()의 내부 구현은 add()에 의존한다.
 
 메서드 이름만 봐서는 같은 일을 할 것 같고, 실제로도 그렇다.  
   
-예를 들어 Properties의 인스턴스인 p가 있다고 가정해보자. 웃기게도 p.getProperty(key)와 p.get(key)의 결과는 다를 수 있다. getProperty()는 Properties 클래스의 책임에 맞는 일을 하지만, 같은 일을 하는 메서드인 get()이 상위 클래스인 Hashtable에도 이미 있었기 때문이다. Properties는 키(key)와 값(value)으로 문자열(String)만 사용 할 수 있게 하려 했으나, 클라이언트가 p.get(key)를 하는 순간 Properties의 불변식은 허무하게 깨져버린다.
+예를 들어 Properties의 인스턴스인 p가 있다고 가정해보자. 웃기게도 p.getProperty(key)와 p.get(key)의 결과는 다를 수 있다. getProperty()는 Properties 클래스의 책임에 맞는 일을 하지만, 같은 일을 하는 메서드인 get()이 상위 클래스인 Hashtable에도 이미 있었기 때문이다. Properties는 키(key)와 값(value)으로 문자열(String)만 사용 할 수 있게 하려 했으나, 클라이언트가 p.get(key) 메서드를 호출 하는 순간 Properties의 불변식은 허무하게 깨져버린다.
   
 아무래도 HashSet을 직접 상속받는 것은 바람직 하지 않는 것 같다. 상속(extends) 대신 인터페이스를 이용한 구현(implements) 으로 유연함과 견고함을 늘리고, 구성(composition)과 전달(forwarding) 기법을 추가해 InstrumentedHashSet를 구현해 보자.
 

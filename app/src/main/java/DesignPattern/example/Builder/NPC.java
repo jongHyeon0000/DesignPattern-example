@@ -18,13 +18,40 @@ public class NPC {
     this.npcModifier = builder.npcModifier;
   }
 
+//  private String name;
+//  private NPC_Type npcType;
+//  
+//  private int cost;
+//  private boolean helper;
+//  private NPC_Modifier npcModifier;
+  
   private String name;
   private NPC_Type npcType;
   
-  private int cost;
-  private boolean helper;
-  private NPC_Modifier npcModifier;
+  private int cost = 0;
+  private boolean helper = false;
+  private NPC_Modifier npcModifier = NPC_Modifier.FRIENDLY;
   
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setNpcType(NPC_Type npcType) {
+    this.npcType = npcType;
+  }
+
+  public void setCost(int cost) {
+    this.cost = cost;
+  }
+
+  public void setHelper(boolean helper) {
+    this.helper = helper;
+  }
+
+  public void setNpcModifier(NPC_Modifier npcModifier) {
+    this.npcModifier = npcModifier;
+  }
+
   @Override
   public String toString() {
     return "NPC [name=" + name + ", npcType=" + npcType + ", cost=" + cost + ", helper="
