@@ -17,7 +17,7 @@ public class NPC {
     this.helper = builder.helper;
     this.npcModifier = builder.npcModifier;
   }
-  
+
   private String name;
   private NPC_Type npcType;
   

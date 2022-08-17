@@ -10,7 +10,7 @@
 > 구조 객체 패턴은 객체를 합성(composition)하는 방법을 정의한다.
 
 ----------------
-![ex_screenshot](../../../../resources/decorator/Decorator_Pattern.png)
+![ex_screenshot](../../../../resources/decorator/Decorator_Pattern.drawio.png)
 
 **HP**
 > 캐릭터의 체력과 관련된 데이터 값을 관리하는 값 클래스
