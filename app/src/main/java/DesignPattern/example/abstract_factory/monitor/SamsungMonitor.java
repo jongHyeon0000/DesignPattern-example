@@ -1,8 +1,8 @@
 package DesignPattern.example.abstract_factory.monitor;
 
 public class SamsungMonitor extends Monitor{
-  public SamsungMonitor(int cost, int weight, int inch){
-    super(cost, weight, inch);
+  public SamsungMonitor(String name, int cost, int weight, int inch){
+    super(name , cost, weight, inch);
   }
 
   @Override

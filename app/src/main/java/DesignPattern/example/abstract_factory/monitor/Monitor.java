@@ -1,63 +1,58 @@
 package DesignPattern.example.abstract_factory.monitor;
 
-import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
+import java.util.Objects;
 
 abstract public class Monitor {
+  protected String name;
   protected int cost;
   protected int weight;
   protected int inch;
 
-  Monitor(int cost, int weight, int inch) {
+  Monitor(String name, int cost, int weight, int inch) {
+    this.name = name;
     this.cost = cost;
     this.weight = weight;
     this.inch = inch;
   }
 
+  public String getName() {
+    return name;
+  }
+
+  public int getCost() {
+    return cost;
+  }
+
   public final static class CreateMonitorRank {
-    @FunctionalInterface
-    private interface DefaultStarCalculus<T> {
-      int getStar(T cost, T weight, T inch);
+    private static Map<Class<? extends Monitor>, Map<String, Integer>> monitorRankingTable =
+        new HashMap<Class<? extends Monitor>, Map<String, Integer>>();
+
+    public static void putMonitor(Class<? extends Monitor> monitorType, Monitor monitor) {
+      int cost;
+
+      if (Objects.nonNull(cost = monitorRankingTable.get(Objects.requireNonNull(monitorType)).get(monitor.getName()))
+          && cost < monitor.getCost()) {
+        monitorRankingTable.get(monitorType).put(monitor.getName(), monitor.getCost());
+      } 
+      else {
+        monitorRankingTable.get(monitorType).put(monitor.getName(), monitor.getCost());
+      }
     }
 
-    private static final DefaultStarCalculus<Integer> defalutStarCalculus =
-        (cost, weight, inch) -> (inch * 100000) - cost - (weight * 10000);
+    public static Map<String, Integer> getMonitorRankingList(Class<? extends Monitor> monitorType) {
+      return monitorRankingTable.get(Objects.requireNonNull(monitorType));
+    }
 
-    @SafeVarargs // item 3
-    public static <V extends Monitor> Map<Integer, V> getRanking(
-        DefaultStarCalculus<Integer> starCalculus, Comparator<? super Integer> comparator,
-        V... monitors) {
-      Map<Integer, V> map = new TreeMap<Integer, V>(comparator);
+    public static int getMonitorLowestPrice(Class<? extends Monitor> monitorType, Monitor monitor) {
+      int lowestPrice;
 
-      for (V monitorElement : monitors) {
-        map.put(
-            starCalculus.getStar(monitorElement.cost, monitorElement.weight, monitorElement.inch),
-            monitorElement);
+      if (Objects.nonNull(lowestPrice = monitorRankingTable.get(Objects.requireNonNull(monitorType)).get(monitor.getName()))) {
+        return lowestPrice;
       }
 
-      return map;
-    }
-                               
-    @SafeVarargs
-    public static <V extends Monitor> Map<Integer, V> getRanking(
-        DefaultStarCalculus<Integer> starCalculus, V... monitors) {
-      return CreateMonitorRank.getRanking(starCalculus, Integer::compare, monitors);
-    }
-
-    @SafeVarargs
-    public static <V extends Monitor> Map<Integer, V> getRanking(
-        Comparator<? super Integer> comparator, V... monitors) {
-      return CreateMonitorRank.getRanking(defalutStarCalculus, comparator, monitors);
-    }
-
-    @SafeVarargs // item 4, 53
-    public static <V extends Monitor> Map<Integer, V> getRanking(V... monitors) {
-      if(monitors.length <= 0) {
-        throw new IllegalArgumentException();
-      }
-      
-      return CreateMonitorRank.getRanking(defalutStarCalculus, Integer::compare, monitors);
+      return 0;
     }
   }
 }

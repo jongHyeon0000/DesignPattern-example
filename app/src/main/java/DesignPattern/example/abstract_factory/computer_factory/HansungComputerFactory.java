@@ -20,8 +20,8 @@ public class HansungComputerFactory implements ComputerFactory{
   }
 
   @Override
-  public Monitor CreateMonitor(int cost, int weight, int inch) {
-    return new AppleMonitor(cost, weight, inch);
+  public Monitor CreateMonitor(String name, int cost, int weight, int inch) {
+    return new AppleMonitor(name, cost, weight, inch);
   }
 
 }
