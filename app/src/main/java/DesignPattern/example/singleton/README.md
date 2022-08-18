@@ -341,7 +341,7 @@ final class DiscountEventPeriod {
 간단한 Stack 예제를 실패 원자적으로 만들어 보자 
 
 ```Java
-  class Stack<'T'>{
+  class Stack<T>{
     private int size; // 스택의 현재 사이즈
     private Object[] elements; // 스택 내부 배열
     
@@ -382,7 +382,7 @@ final class DiscountEventPeriod {
 
 ### **메서드의 파라미터가 존재하거나 실패할 가능성이 있는(예외가 throw 될 수 있는) 코드, 객체 내부의 상태를 변경하려는 경우, 유효성을 검사하는 코드를 최상위에 삽입한다.**
 ```Java
-  class Stack<'T'>{
+  class Stack<T>{
 
   ...
   
@@ -419,7 +419,7 @@ final class DiscountEventPeriod {
 
 ### **객체의 임시 복사본에서 작업을 수행한 다음, 작업이 성공적으로 완료되면 원래 객체와 교체한다.**
 ```Java
-  class Stack<'T'>{
+  class Stack<T>{
 
   ...
   
@@ -440,9 +440,9 @@ final class DiscountEventPeriod {
 ### **작업 도중 발생하는 실패를 가로채는 복구 코드를 작성하여 작업 전 상태로 되돌리는 방법**
 > 자주 쓰이는 방법은 아니다.
 
-실패 원자성을 항상 달성하기 위해 집착은 금물이다. 예를 들어 두 Thread가 동기화 없이 같은 객체에 접근해 Write 중이라면,  
-ConcurrentModificationException을 잡아 냈다고 해도 그 객체의 일관성이 유지중이라는 보장이 없다.  
-따라서 그 객체를 여전히 쓸 수 있는 상태로 가정하는 것은 위험하다.
+    실패 원자성을 항상 달성하기 위해 집착은 금물이다. 예를 들어 두 Thread가 동기화 없이 같은 객체에 접근해 Write 중이라면,  
+    ConcurrentModificationException을 잡아 냈다고 해도 그 객체의 일관성이 유지중이라는 보장이 없다.  
+    따라서 그 객체를 여전히 쓸 수 있는 상태로 가정하는 것은 위험하다.
 
-또한 실패 원자적인 코드를 작성하는 것은 큰 비용이나 복잡도가 필요 할 수도 있다.  
-자체적인 예외 API를 만들거나, 가시성만 떨어뜨리는 강박적인 null 체크가 그 대표적인 예다.
+    또한 실패 원자적인 코드를 작성하는 것은 큰 비용이나 복잡도가 필요 할 수도 있다.  
+    자체적인 예외 API를 만들거나, 가시성만 떨어뜨리는 강박적인 null 체크가 그 대표적인 예다.
