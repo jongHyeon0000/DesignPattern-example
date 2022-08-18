@@ -1,5 +1,6 @@
 package DesignPattern.example.Builder;
 
+import java.util.Date;
 
 public class NPC {  
 	enum NPC_Type{
@@ -89,5 +90,19 @@ public class NPC {
     public NPC Build(){
       return new NPC(this);
     }
+  }
+}
+
+final class DiscountEventPeriod{
+  private final Date start;
+  private final Date end;
+  
+  public DiscountEventPeriod(Date start, Date end) {
+    if(start.compareTo(end) > 0) {
+      throw new IllegalArgumentException("종료시간(" + end + ") 가 시작시간(" + start + ")보다 빠를 수 없습니다.");
+    }
+    
+    this.start = start;
+    this.end = end;
   }
 }
