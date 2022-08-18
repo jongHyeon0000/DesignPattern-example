@@ -1,9 +1,13 @@
 package DesignPattern.example.abstract_factory;
 
+import java.util.Iterator;
+import java.util.Map.Entry;
 import DesignPattern.example.abstract_factory.computer.Computer;
 import DesignPattern.example.abstract_factory.computer_factory.ComputerFactory;
 import DesignPattern.example.abstract_factory.computer_factory.HansungComputerFactory;
 import DesignPattern.example.abstract_factory.computer_factory.MsiComputerFactory;
+import DesignPattern.example.abstract_factory.monitor.Monitor;
+import DesignPattern.example.abstract_factory.monitor.SamsungMonitor;
 
 public class Main {
   public static void main(String[] args) {
@@ -25,12 +29,13 @@ public class Main {
     Computer myHansungComputer3 = new Computer(computerFactory.CreateKeyboard("SM-129"),
                                           computerFactory.CreateMouse(7500, 42, "MAC_S-35"),
                                           computerFactory.CreateMonitor("GGAb-12", 1450000, 70, 41));
+        
+    Iterator<Entry<String, Integer>> iter = Monitor.LowestPriceMonitorManager.getMonitorLowestPriceList(SamsungMonitor.class).entrySet().iterator();
     
-//    Map<Integer, Monitor> MonitorRank = Monitor.CreateMonitorRank.getRanking(myHansungComputer1.getMonitor(),
-//                                         myHansungComputer2.getMonitor(),
-//                                         myHansungComputer3.getMonitor(),
-//                                         myMsiComputer1.getMonitor());
-    
-//    System.out.println(MonitorRank);
+    while(iter.hasNext()) {
+      Entry<String, Integer> monitorTable = iter.next();
+      
+      System.out.println(monitorTable);
+    }
   }
 }

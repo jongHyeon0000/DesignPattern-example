@@ -15,6 +15,8 @@ abstract public class Monitor {
     this.cost = cost;
     this.weight = weight;
     this.inch = inch;
+    
+    LowestPriceMonitorManager.putMonitor(this.getClass(), this);
   }
 
   public String getName() {
@@ -25,30 +27,42 @@ abstract public class Monitor {
     return cost;
   }
 
-  public final static class CreateMonitorRank {
-    private static Map<Class<? extends Monitor>, Map<String, Integer>> monitorRankingTable =
+  public final static class LowestPriceMonitorManager {
+    private static Map<Class<? extends Monitor>, Map<String, Integer>> monitorTable =
         new HashMap<Class<? extends Monitor>, Map<String, Integer>>();
 
     public static void putMonitor(Class<? extends Monitor> monitorType, Monitor monitor) {
-      int cost;
+      Map<String, Integer> concreteMonitorTable;
 
-      if (Objects.nonNull(cost = monitorRankingTable.get(Objects.requireNonNull(monitorType)).get(monitor.getName()))
-          && cost < monitor.getCost()) {
-        monitorRankingTable.get(monitorType).put(monitor.getName(), monitor.getCost());
-      } 
+      if (Objects.nonNull(concreteMonitorTable = monitorTable.get(Objects.requireNonNull(monitorType)))) {
+        int lowestPrice;
+        
+        if(Objects.nonNull(lowestPrice = concreteMonitorTable.get(monitor.getName()))){
+          if(lowestPrice > monitor.getCost()) {
+            concreteMonitorTable.put(monitor.getName(), monitor.getCost());
+          }
+        }
+        else {
+          concreteMonitorTable.put(monitor.getName(), monitor.getCost());
+        }
+      }
       else {
-        monitorRankingTable.get(monitorType).put(monitor.getName(), monitor.getCost());
+        Map<String, Integer> map = new HashMap<>();
+        map.put(monitor.getName(), monitor.getCost());
+        
+        monitorTable.put(monitorType, map);
       }
     }
 
-    public static Map<String, Integer> getMonitorRankingList(Class<? extends Monitor> monitorType) {
-      return monitorRankingTable.get(Objects.requireNonNull(monitorType));
+    public static Map<String, Integer> getMonitorLowestPriceList(Class<? extends Monitor> monitorType) {
+      return monitorTable.get(Objects.requireNonNull(monitorType));
     }
 
     public static int getMonitorLowestPrice(Class<? extends Monitor> monitorType, Monitor monitor) {
       int lowestPrice;
 
-      if (Objects.nonNull(lowestPrice = monitorRankingTable.get(Objects.requireNonNull(monitorType)).get(monitor.getName()))) {
+      if (Objects.nonNull(lowestPrice =
+          monitorTable.get(Objects.requireNonNull(monitorType)).get(monitor.getName()))) {
         return lowestPrice;
       }
 
