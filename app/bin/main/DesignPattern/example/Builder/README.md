@@ -14,6 +14,8 @@
 
 ----------------------
 
+![ex_screenshot](../../../../resources/builder/Builder_Pattern.drawio.png)
+
 **NPC**
 > 플레이어와 상호 작용이 가능한 NPC(Non-player character)를 구현한 클래스  
 > 
