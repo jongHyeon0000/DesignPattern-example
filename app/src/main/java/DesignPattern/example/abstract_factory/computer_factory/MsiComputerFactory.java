@@ -1,9 +1,9 @@
 package DesignPattern.example.abstract_factory.computer_factory;
 
-import DesignPattern.example.abstract_factory.keyboard.AppleKeyboard;
 import DesignPattern.example.abstract_factory.keyboard.Keyboard;
-import DesignPattern.example.abstract_factory.monitor.AppleMonitor;
+import DesignPattern.example.abstract_factory.keyboard.SamsungKeyboard;
 import DesignPattern.example.abstract_factory.monitor.Monitor;
+import DesignPattern.example.abstract_factory.monitor.SamsungMonitor;
 import DesignPattern.example.abstract_factory.mouse.Mouse;
 import DesignPattern.example.abstract_factory.mouse.SamsungMouse;
 
@@ -11,7 +11,7 @@ public class MsiComputerFactory implements ComputerFactory{
 
   @Override
   public Keyboard CreateKeyboard(String name) {
-    return new AppleKeyboard(name);
+    return new SamsungKeyboard(name);
   }
 
   @Override
@@ -21,7 +21,7 @@ public class MsiComputerFactory implements ComputerFactory{
 
   @Override
   public Monitor CreateMonitor(String name, int cost, int weight, int inch) {
-    return new AppleMonitor(name, cost, weight, inch);
+    return new SamsungMonitor(name, cost, weight, inch);
   }
 
 }

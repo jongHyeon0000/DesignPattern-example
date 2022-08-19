@@ -27,23 +27,24 @@ abstract public class Monitor {
     return cost;
   }
 
-  public final static class LowestPriceMonitorManager {
-    private static Map<Class<? extends Monitor>, Map<String, Integer>> monitorTable =
+  public static final class LowestPriceMonitorManager {
+    private static final Map<Class<? extends Monitor>, Map<String, Integer>> monitorTable =
         new HashMap<Class<? extends Monitor>, Map<String, Integer>>();
 
-    public static void putMonitor(Class<? extends Monitor> monitorType, Monitor monitor) {
-      Map<String, Integer> concreteMonitorTable;
-
-      if (Objects.nonNull(concreteMonitorTable = monitorTable.get(Objects.requireNonNull(monitorType)))) {
-        int lowestPrice;
-        
-        if(Objects.nonNull(lowestPrice = concreteMonitorTable.get(monitor.getName()))){
+    private static final void putMonitor(Class<? extends Monitor> monitorType, Monitor monitor) {
+      monitorType = Objects.requireNonNull(monitorType);
+      monitor = Objects.requireNonNull(monitor);
+      
+      if (Objects.nonNull(monitorTable.get(monitorType))) {        
+        if(Objects.nonNull(monitorTable.get(monitorType).get(monitor.getName()))){
+          int lowestPrice = monitorTable.get(monitorType).get(monitor.getName());
+          
           if(lowestPrice > monitor.getCost()) {
-            concreteMonitorTable.put(monitor.getName(), monitor.getCost());
+            monitorTable.get(monitorType).put(monitor.getName(), monitor.getCost());
           }
         }
         else {
-          concreteMonitorTable.put(monitor.getName(), monitor.getCost());
+          monitorTable.get(monitorType).put(monitor.getName(), monitor.getCost());
         }
       }
       else {
@@ -54,19 +55,29 @@ abstract public class Monitor {
       }
     }
 
-    public static Map<String, Integer> getMonitorLowestPriceList(Class<? extends Monitor> monitorType) {
-      return monitorTable.get(Objects.requireNonNull(monitorType));
+    public static final Map<String, Integer> getMonitorLowestPriceMap(Class<? extends Monitor> monitorType) {
+      Map<String, Integer> map;
+      
+      if(Objects.nonNull(map = monitorTable.get(Objects.requireNonNull(monitorType)))) {
+        return map;
+      }
+      
+      throw new IllegalStateException("해당 회사 제품이 없습니다.");
     }
-
-    public static int getMonitorLowestPrice(Class<? extends Monitor> monitorType, Monitor monitor) {
+    
+    public static final int getMonitorLowestPrice(Class<? extends Monitor> monitorType, String monitorName) {
       int lowestPrice;
 
       if (Objects.nonNull(lowestPrice =
-          monitorTable.get(Objects.requireNonNull(monitorType)).get(monitor.getName()))) {
+          monitorTable.get(Objects.requireNonNull(monitorType)).get(monitorName))) {
         return lowestPrice;
       }
 
-      return 0;
+      throw new IllegalStateException(String.format("%s 제품이 없습니다.", monitorName));
+    }
+    
+    public static final int getMonitorLowestPrice(Class<? extends Monitor> monitorType, Monitor monitor) {
+      return getMonitorLowestPrice(monitorType, Objects.requireNonNull(monitor).getName());
     }
   }
 }
