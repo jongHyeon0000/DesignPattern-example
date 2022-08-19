@@ -1,5 +1,7 @@
 # 빌더 패턴(Builder Pattern)
 
+![ex_screenshot](../../../../resources/builder/Builder-pattern-class-diagram.png)
+
 ------------------
 
 ## **생성 패턴(Creational Patterns)**

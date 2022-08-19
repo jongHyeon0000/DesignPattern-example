@@ -1,5 +1,7 @@
 # 빌더 패턴(Builder Pattern)
 
+![ex_screenshot](../../../../resources/builder/Builder-pattern-class-diagram.png)
+
 ------------------
 
 ## **생성 패턴(Creational Patterns)**
@@ -11,6 +13,8 @@
 > 객체의 표현 방법을 기존 클래스에서 분리 한다.
 
 ----------------------
+
+![ex_screenshot](../../../../resources/builder/Builder_Pattern.drawio.png)
 
 **NPC**
 > 플레이어와 상호 작용이 가능한 NPC(Non-player character)를 구현한 클래스  

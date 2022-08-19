@@ -1,14 +1,8 @@
-package DesignPattern.example.Builder;
+package DesignPattern.example.Builder.npc;
 
 import java.util.Objects;
 
 public class NPC {
-  enum NPC_Type {
-    MERCHANT, HELPER, QUEST
-  }
-  enum NPC_Modifier {
-    FRIENDLY, NEUTRAL, HOSTILE
-  }
   private static final int MAX_NAME_LENGTH = 10;
 
   public NPC(Builder builder) {
@@ -48,7 +42,7 @@ public class NPC {
     private boolean helper;
     private NPC_Modifier npcModifier;
 
-    Builder(String name, NPC_Type npcType) {
+    public Builder(String name, NPC_Type npcType) {
       this.name = Objects.requireNonNull(name);
       this.npcType = Objects.requireNonNull(npcType);
     }
@@ -69,7 +63,6 @@ public class NPC {
     }
 
     public NPC build() {
-      
       return new NPC(this);
     }
   }

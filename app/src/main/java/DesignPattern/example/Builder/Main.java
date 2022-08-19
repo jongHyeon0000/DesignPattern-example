@@ -1,7 +1,8 @@
 package DesignPattern.example.Builder;
 
-import DesignPattern.example.Builder.NPC.NPC_Modifier;
-import DesignPattern.example.Builder.NPC.NPC_Type;
+import DesignPattern.example.Builder.npc.NPC;
+import DesignPattern.example.Builder.npc.NPC_Modifier;
+import DesignPattern.example.Builder.npc.NPC_Type;
 
 public class Main {
   public static void main(String[] args) {
