@@ -185,7 +185,7 @@ Car 객체의 불변식을 유지하기 위해서는 oilValue의 값이 초기�
     ...
   }
 ```
-- **불변 필드라 할 지라도, 적시에 방어적 복사본을 만든다.**
+- **적시에 방어적 복사본을 만든다.**
 
 ```Java
 final class DiscountEventPeriod {
@@ -211,9 +211,11 @@ final class DiscountEventPeriod {
   }
 }
 ```
+DiscountEventPeriod 클래스는 할인 이벤트 기간을 나타내기 위해 시작 일자와 종료 일자를 Date 객체로 표현한다.
+  
 사실 Date 클래스는 자신의 가변 필드를 노출하는 위험성이 내포된 클래스이고, Java 8 이후 LocalDateTime 클래스와 ZonedDateTime 클래스에게 자리를 넘겨주었다.  
 
-하지만 아직 Date 객체를 이용하는 프로그램은 많을 것이다. Date 객체(start, end)는 위에서 설명한 규약을 모두 지킨 불변 필드이고, 불변 필드만 보유한 DiscountEventPeriod 클래스는 불변 클래스임이 분명하다. 
+하지만 아직 Date 객체를 이용하는 프로그램은 많을 것이다. Date 객체(start, end)는 위에서 설명한 규약을 모두 지킨(private final, setter mathod 미 보유) 불변 필드이고, 불변 필드만 보유한 DiscountEventPeriod 클래스는 불변 클래스임이 분명하다. 
 
 이제 start와 end의 불변식을 망가뜨려보자.  
 
