@@ -68,8 +68,7 @@ abstract public class Monitor {
     public static final int getMonitorLowestPrice(Class<? extends Monitor> monitorType, String monitorName) {
       int lowestPrice;
 
-      if (Objects.nonNull(lowestPrice =
-          monitorTable.get(Objects.requireNonNull(monitorType)).get(monitorName))) {
+      if (Objects.nonNull(lowestPrice = getMonitorLowestPriceMap(monitorType).get(monitorName))) {
         return lowestPrice;
       }
 
