@@ -185,7 +185,7 @@ Car 객체의 불변식을 유지하기 위해서는 oilValue의 값이 초기�
     ...
   }
 ```
-- **불변 필드라 할 지라도, 적시에 방어적 복사본을 만든다.**
+- **적시에 방어적 복사본을 만든다.**
 
 ```Java
 final class DiscountEventPeriod {
@@ -211,9 +211,11 @@ final class DiscountEventPeriod {
   }
 }
 ```
+DiscountEventPeriod 클래스는 할인 이벤트 기간을 나타내기 위해 시작 일자와 종료 일자를 Date 객체로 표현한다.
+  
 사실 Date 클래스는 자신의 가변 필드를 노출하는 위험성이 내포된 클래스이고, Java 8 이후 LocalDateTime 클래스와 ZonedDateTime 클래스에게 자리를 넘겨주었다.  
 
-하지만 아직 Date 객체를 이용하는 프로그램은 많을 것이다. Date 객체(start, end)는 위에서 설명한 규약을 모두 지킨 불변 필드이고, 불변 필드만 보유한 DiscountEventPeriod 클래스는 불변 클래스임이 분명하다. 
+하지만 아직 Date 객체를 이용하는 프로그램은 많을 것이다. Date 객체(start, end)는 위에서 설명한 규약을 모두 지킨(private final, setter mathod 미 보유) 불변 필드이고, 불변 필드만 보유한 DiscountEventPeriod 클래스는 불변 클래스임이 분명하다. 
 
 이제 start와 end의 불변식을 망가뜨려보자.  
 
@@ -239,6 +241,7 @@ final class DiscountEventPeriod {
   private final Date end;
 
   public DiscountEventPeriod(Date start, Date end) {
+    // 새 Date 인스턴스를 만들어 방어적 복사(defensive copy)를 구현 했다.
     this.start = new Date(start.getTime());
     this.end = new Date(end.getTime());
     
@@ -252,8 +255,10 @@ final class DiscountEventPeriod {
 }
 ```
 
-실패 원자성을 설명 할 때 유효성을 검사하는 코드를 최상위에 삽입해야 한다고 했지만, 방어적 복사 코드는 반드시 파라미터 유효성 검사 코드보다 상위에 삽입 되어야 한다.
-
+실패 원자성을 설명 할 때 파라미터 유효성을 검사하는 코드를 최상위에 삽입해야 한다고 했지만, 방어적 복사 코드는 반드시 파라미터 유효성 검사 코드보다 상위에 삽입 되어야 한다.
+  
+유효성 검사 코드가 방어적 복사 코드보다 상단에 위치한다면, 멀티 쓰레드 환경에서 방어적 복사 코드가 무효화 될 수 있다. 
+  
 "종료 연도는 시작 연도보다 빠를 수 없다" 가 DiscountEventPeriod 객체의 불변식이다. 1번 쓰레드가 DiscountEventPeriod 객체의 생성자의 유효성 검사를 통과하고 방어적 복사를 하려던 찰나의 순간, 원본 객체를 다루는 2번 쓰레드가 갑자기 시작 연도를 100년이나 늘려버린다면 우리의 불변식 검사 코드는 쓸모 없어진다.  
 
 요약하자면 한 쓰레드가 원본 객체의 유효성을 검사한 후 복사본을 만드는 찰나의 순간에 다른 쓰레드가 원본 객체를 수정 해 버린 것이다. 이런 공격을 검사시점/사용시점(TOCTOU, time-of-check) 공격 이라 한다.
