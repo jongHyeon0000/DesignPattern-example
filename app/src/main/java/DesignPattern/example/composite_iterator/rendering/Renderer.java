@@ -1,4 +1,6 @@
-package DesignPattern.example.composite_iterator;
+package DesignPattern.example.composite_iterator.rendering;
+
+import DesignPattern.example.composite_iterator.map.Dungeon;
 
 public class Renderer {
   public static void rendering(Dungeon dungeon) {

@@ -1,4 +1,6 @@
-package DesignPattern.example.composite_iterator;
+package DesignPattern.example.composite_iterator.map;
+
+import DesignPattern.example.composite_iterator.rendering.Renderable;
 
 abstract public class Dungeon implements Renderable{  
   protected String dungeonName;
@@ -7,7 +9,7 @@ abstract public class Dungeon implements Renderable{
   protected int defenceAdvantage;
   protected int timeLimit;
 
-  Dungeon(String dungeonName, int attackAdventage, int defenceAdvantage, int timeLimit){
+  public Dungeon(String dungeonName, int attackAdventage, int defenceAdvantage, int timeLimit){
     this.dungeonName = dungeonName;
     this.level = 1;
     this.attackAdvantage = attackAdventage;

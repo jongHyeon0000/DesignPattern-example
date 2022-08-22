@@ -1,7 +1,7 @@
-package DesignPattern.example.composite_iterator;
+package DesignPattern.example.composite_iterator.map;
 
-public class Mountain extends Dungeon{
-  Mountain(String dungeonName, int attackAdventage, int defenceAdvantage, int timeLimit){
+public class Cave extends Dungeon{
+  public Cave(String dungeonName, int attackAdventage, int defenceAdvantage, int timeLimit){
     super(dungeonName, attackAdventage, defenceAdvantage, timeLimit);
   }
 
@@ -12,7 +12,7 @@ public class Mountain extends Dungeon{
     System.out.printf("    Monster's Attack Adventage: %d%c\n", attackAdvantage, '%');
     System.out.printf("    Monster's Defence Adventage : %d%c\n", defenceAdvantage, '%');
     System.out.printf("    Time Limit : %d\n", timeLimit);
-    System.out.println("    ...Beware of altitude sickness. ");
+    System.out.println("    ...Need torchlight");
     System.out.println("<<--------------------------------------------------->>\n");
   }
 }

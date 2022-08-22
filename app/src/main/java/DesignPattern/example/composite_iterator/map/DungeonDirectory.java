@@ -1,11 +1,12 @@
-package DesignPattern.example.composite_iterator;
+package DesignPattern.example.composite_iterator.map;
 import java.util.ArrayList;
 import java.util.List;
+import DesignPattern.example.composite_iterator.iterable.Iterator;
 
 public class DungeonDirectory<T extends Dungeon> extends Dungeon{
   private List<T> dungeonList = new ArrayList<>();
 
-  DungeonDirectory(String dungeonName, int attackAdventage, int defenceAdvantage, int timeLimit){
+  public DungeonDirectory(String dungeonName, int attackAdventage, int defenceAdvantage, int timeLimit){
     super(dungeonName, attackAdventage, defenceAdvantage, timeLimit);
   }
 

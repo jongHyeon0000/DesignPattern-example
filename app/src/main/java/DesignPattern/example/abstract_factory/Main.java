@@ -28,12 +28,12 @@ public class Main {
         computerFactory.CreateMouse(7500, 42, "MAC_S-35"),
         computerFactory.CreateMonitor("GGAb-12", 1450000, 70, 41));
 
-    System.out.println(Monitor.LowestPriceMonitorManager.getMonitorLowestPriceMap(AppleMonitor.class));
+    System.out.println(Monitor.LowestPriceMonitorManager.getLowestPriceMonitorMap(AppleMonitor.class));
     
-    System.out.println(Monitor.LowestPriceMonitorManager.getMonitorLowestPrice(AppleMonitor.class,
+    System.out.println(Monitor.LowestPriceMonitorManager.getLowestPriceMonitor(AppleMonitor.class,
         myHansungComputer1.getMonitor()));
     
     System.out.println(
-        Monitor.LowestPriceMonitorManager.getMonitorLowestPrice(AppleMonitor.class, "GGA-123"));
+        Monitor.LowestPriceMonitorManager.getLowestPriceMonitor(AppleMonitor.class, "GGA-123"));
   }
 }

@@ -1,5 +1,14 @@
 package DesignPattern.example.composite_iterator;
 
+import DesignPattern.example.composite_iterator.iterable.Iterator;
+import DesignPattern.example.composite_iterator.map.Cave;
+import DesignPattern.example.composite_iterator.map.Dungeon;
+import DesignPattern.example.composite_iterator.map.DungeonDirectory;
+import DesignPattern.example.composite_iterator.map.Forest;
+import DesignPattern.example.composite_iterator.map.Mountain;
+import DesignPattern.example.composite_iterator.map.Swamp;
+import DesignPattern.example.composite_iterator.rendering.Renderer;
+
 public class Main {
   public static void main(String[] args) {
     DungeonDirectory<Dungeon> dungeonA = new DungeonDirectory<>("Crossroads 1", 0, 0, 0);
