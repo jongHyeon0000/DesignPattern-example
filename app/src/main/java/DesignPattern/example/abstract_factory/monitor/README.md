@@ -255,16 +255,8 @@ abstract class People{
   ...
 }
 
-class Man extends People implements Iterator<Man>{
-  @Override
-  public boolean hasNext() {
-    ...
-  }
+class Man extends People{
 
-  @Override
-  public Man next() {
-    ...
-  }
 }
 
 public static void main(String[] args) {
@@ -276,9 +268,9 @@ public static void main(String[] args) {
 }
 ``` 
 
-상위 클래스인 People 클래스에서 Iterator를 구현하지 않았지만, 하위 클래스인 Man 클래스에서 Iterator를 구현 했다. Man 클래스는 Iterator 규약에 맞는 메서드를 적절히 구현 했고, People 클래스의 하위 타입이기 때문에, pushAll() 메서드의 동작에 문제가 없음을 잘 안다. People 타입 으로 하위 타입 Man 객체의 인스턴스를 참조 하는건 자연스러운 일이기 때문이다.
+실제로는 peopleStack.pushAll(iter) 에서 컴파일 에러 메시지가 나온다. peopleStack 객체의 매개변수화 타입은 Stack\<People>로 컴파일 타임 때 이미 치환 되었고, 따라서 peopleStack 객체의 pushAll(Iterator\<T> src) 메서드도 컴파일 타임 때 pushAll(Iterator\<People> src) 로 치환 되었다. 컴파일 에러 메시지의 내용은 Iterator\<Man> 타입을 Iterator\<People> 타입으로 캐스팅 할 수 없다는 메시지다.  
 
-실제로는 peopleStack.pushAll(iter) 에서 컴파일 에러 메시지가 나온다. peopleStack 객체의 매개변수화 타입은 Stack\<People>로 컴파일 타임 때 이미 정해졌고, 매개변수화 타입은 불공변 이므로, 런타임 도중 다시는 바꿀 수 없다. 따라서 peopleStack 객체의 pushAll(Iterator\<T> src) 메서드도 컴파일 타임 때 pushAll(Iterator\<People> src) 로 이미 치환 되었다. 컴파일 에러 메시지의 내용은 Iterator\<Man> 타입을 Iterator\<People> 타입으로 캐스팅 할 수 없다는 메시지다.  
+우리는 Iterator 인터페이스 규칙에 따라 People 타입의 원소를 순회 하기만 하면 되고, People 타입 으로 하위 타입 Man 객체의 인스턴스를 참조 하는건 자연스러운 일인데, 이럴땐 제네릭 문법이 조금 답답해 보인다.
 
 이 문제를 유연하게 해결 할 수 있는 방법이 바로 한정적 와일드카드 타입이라는 특별한 매개변수화 타입이다.
 
@@ -346,7 +338,7 @@ class Stack<T>{
 
 이제 popAll() 메서드의 입력 매개변수의 타입이 "T의 Collection"이 아니라 "T 또는 T의 상위 타입 Collection"이 된다.  
 
-어떤 상황에서 한정적 와일드카드 문법을 사용하는 것이 바람직할까? 조슈아 블로크가 제안한 공식이다.  
+그렇다면 어떤 상황에서 한정적 와일드카드 문법을 사용하는 것이 바람직할까? 조슈아 블로크가 제안한 공식이다.  
 
 **펙스(PECS) : producer-extends, consumer-super**  
 
@@ -355,7 +347,8 @@ class Stack<T>{
 위 Stack 예제에서 pushAll() 메서드는 Stack 내부의 T 타입 원소를 파라미터로 받은 src 객체로 생산 하므로 생산자에 속한다.  
 위 Stack 예제에서 popAll() 메서드는 Stack 내부의 T 타입 원소를 파라미터로 받은 dst 객체로 소비 하므로 소비자에 속한다. 
 
-    단 메서드의 리턴 타입은 한정적 와일드카드가 되어선 안된다. 클라이언트에서 리턴 타입을 받기 위한 객체 또한 한정적 와일드카드 타입으로 받아야 하기 때문이다. 클라이언트는 리턴 타입의 실제 타입 매개변수가 정확히 어떤 타입인지 알 수 없으므로, 클라이언트 측에서 객체를 사용하기 전 타입 캐스팅 코드가 삽입(주로 instanceof) 되는데, 이는 제네릭 문법의 이점을 스스로 버리는 것이다.
+    단 메서드의 리턴 타입은 한정적 와일드카드가 되어선 안된다. 클라이언트에서 리턴 타입을 받기 위한 객체 또한 한정적 와일드카드 타입으로 받아야 하기 때문이다.  
+    클라이언트는 리턴 타입의 실제 타입 매개변수가 정확히 어떤 타입인지 알 수 없으므로, 클라이언트 측에서 객체를 사용하기 전 타입 캐스팅 코드가 삽입(주로 instanceof) 되는데, 이는 제네릭 문법의 이점을 스스로 버리는 것이다.
  
 한정적 와일드카드 문법은 특히 재귀적 타입 한정 문법과 잘 맞는다.
 
@@ -365,9 +358,9 @@ public static <E extends Comparable<E>> E Max(List<E> list){
 }
 ```
 
-이 정적 도우미 메서드는 파라미터로 list\<E> 타입의 리스트를 하나 받는다. 이 때 정규 타입 매개변수 E 는 Comparable\<E> 인터페이스를 구현 해야 한다. 즉 \<E extends Comparable\<E>> 는 "E 는 E 자신과 논리적 비교가 가능하다." 라는 뜻이 된다.  
+이 정적 도우미 메서드는 파라미터로 list\<E> 타입의 리스트를 하나 받는다. 이 때 정규 타입 매개변수 E 는 Comparable\<E> 인터페이스를 구현 해야 한다. 즉 \<E extends Comparable\<E>> 는 "E 는 E 자신과 논리적 비교가 가능한 기능을 구현 했다" 라는 뜻이 된다.  
 
-그리고 list의 원소 중 Comparable\<E> 인터페이스 규약에 맞는 메서드(compareTo)를 이용해, 가장 큰 원소를 리턴 해주는 평범한 max 메서드이다.  
+그리고 list의 원소 중 Comparable\<E> 인터페이스 규약에 맞는 메서드(compareTo)를 이용해, 가장 큰 원소를 리턴 해주는 흔한 max 메서드이다.  
 
 이제 이 max 메서드에 한정적 와일드카드 문법을 도입 하여 유연한 메서드로 리팩토링 해보자.  
 
@@ -377,18 +370,17 @@ public static <E extends Comparable<? super E>> E Max(List<? extends E> list){
 }
 ```
 
-### **하위 모듈에서 Comparable 인터페이스를 구현 하지 않더라도, 상위 모듈에서 구현 한 Comparable 인터페이스를 사용 할 수 있다.**
+### **하위 모듈에서 Comparable 인터페이스를 구현 하지 않았더라도, 상위 모듈에서 구현 한 Comparable 인터페이스를 사용 할 수 있다.**
 
->Man 클래스가 Comparable 인터페이스를 구현 하지 않았더라도, People 클래스에서 Comparable을 구현 했다면 max 메서드를 정상적으로 사용 할 수 있다. 상위 클래스에서 작동하는 모든 기능은 하위 클래스에서도 정상적으로 작동 해야 하기 때문이다. (리스코프 치환 원칙)  
+>Man 클래스가 Comparable 인터페이스를 구현 하지 않았더라도, People 클래스에서 Comparable을 구현 했다면 max 메서드를 정상적으로 사용 할 수 있다. 상위 클래스에서 지원하는 모든 기능은 하위 클래스에서도 정상적으로 작동 해야 하기 때문이다. (리스코프 치환 원칙)  
   
-Comparable<E> 인터페이스를 구현 했다는 것은, "두 E 타입의 객체 논리적 대소비교를 하는 compareTo() 메서드를 인터페이스 규약에 따라 구현한다" 라는 의미다. 즉 E 타입의 객체를 생산 하므로 \<? super E> 가 적절하다.
+Comparable<E> 인터페이스를 구현 했다는 것은, "두 E 타입의 논리적 대소비교를 하는 compareTo() 메서드를 인터페이스 규약에 따라 구현한다" 라는 의미다. 즉 E 타입의 객체를 논리적 대소비교를 위해 소비 하므로 \<? super E> 가 적절하다.
 
 ### **객체지향 프로그래밍의 유연함을 제네릭 문법에서도 느낄 수 있다.**
 
->"남성은 사람이다(Man is a People)" 라는 말을 들으면 어색하다고 느끼는 사람은 없다. 따라서 People 클래스와 Man 클래스의 상속 관계는 거의 적절하다. 따라서 우리는 "People man = new Man()" 과 같이 객체의 클래스 타입을 추상화된 상위 클래스로 선언 하여 사용한다. 문제는 실제 타입 매개변수로 Man, People 클래스를 명시 해도 , 매개변수화 타입은 상위 타입과 하위 타입의 계층적 구조가 존재하지 않는다.  
-(List\<People> 은 List\<Man>의 상위 타입이 아니다, 불공변)  
+>"남성은 사람이다(Man is a People)" 라는 말을 들으면 어색하다고 느끼는 사람은 없다. 따라서 People 클래스와 Man 클래스의 상속 관계는 거의 적절하다. 따라서 우리는 "People man = new Man()" 과 같이 객체의 클래스 타입을 추상화된 상위 클래스로 선언 하여 사용한다. 하지만 실제 타입 매개변수가 계층 구조에 있어도, 매개변수화 타입은 상위 타입과 하위 타입의 계층적 구조가 존재하지 않는다.  
 >
-max 메서드의 역할은 파라미터로 받은 list의 E 타입 원소 중 최대 값을 compareTo 메서드를 이용 해 도출한다. 즉 E 타입의 원소를 소비 하므로 \<? extends E>가 적절하다.
+max 메서드의 역할은 파라미터로 받은 list의 E 타입 원소 중 최대 값을 도출한다. 즉 E 타입의 원소를 생산하여 compareTo 메서드로 도출 하므로 \<? extends E>가 적절하다.
 
 --------------------------------------
 
