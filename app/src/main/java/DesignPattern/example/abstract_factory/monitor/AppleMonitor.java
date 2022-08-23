@@ -1,11 +1,9 @@
 package DesignPattern.example.abstract_factory.monitor;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.EmptyStackException;
 import java.util.Iterator;
-import java.util.List;
 
 public class AppleMonitor extends Monitor {
   public AppleMonitor(String name, int cost, int weight, int inch) {
@@ -21,11 +19,11 @@ public class AppleMonitor extends Monitor {
 
 class Stack<T> {
   private int size; // 스택의 현재 사이즈
-  private Object[] elements; // 스택 내부 배열
+  private T[] elements; // 스택 내부 배열
 
   Stack(int capacity) {
     size = 0;
-    elements = new Object[capacity];
+    elements = (T) new Object[capacity];
   }
 
   public void push(T t) {
@@ -43,7 +41,7 @@ class Stack<T> {
   public T pop() {
     if (!isEmpty()) {
       @SuppressWarnings("unchecked")
-      T result = (T) elements[--size];
+      T result = elements[--size];
       elements[size] = null;
 
       return result;
@@ -66,16 +64,6 @@ class Stack<T> {
       dst.add(pop());
     }
   }
-
-  public static void main(String[] args) {
-    Stack<Man> manStack = new Stack<>(10);
-    Collection<People> peopleList = new ArrayList<>();
-
-  }
-
-  public static <E extends Comparable<E>> E Max(List<E> list){
-    return list.stream().max((e1, e2) -> e1.compareTo(e2)).orElseThrow();
-  }
 }
 
 
@@ -94,4 +82,6 @@ class Man extends People implements Iterator<Man> {
   public Man next() {
     return new Man();
   }
+  
+  
 }
