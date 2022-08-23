@@ -134,8 +134,8 @@ public static void main(String[] args) {
 
 즉 push 메서드의 메서드 시그니쳐는 push(T item)에서 push(Stamp item)으로 변환된다. 당연히 i.next()의 리턴 타입도 Stamp 타입이 되므로  지긋지긋한 형변환 코드도 필요없다.  
 
-stampsStack 객체에 Coin 타입을 push 하는 실수 또한, 컴파일 타임 때 명확하게 알 수 있다.  
-C++의 Vector를 사용하다 골머리를 썩어본 적이 있다면, 제네릭이 얼마나 강력한 고마운 문법인지 알 수 있다.
+stampsStack 객체에 Coin 타입을 push 하는 실수 또한, 컴파일 타임 때 에러 메시지로 명확하게 알 수 있다.  
+C++의 Vector를 사용하다 골머리를 썩어본 적이 있다면, 제네릭이 얼마나 고마운 문법인지 알 수 있다.
 
 ### **자바 컴파일러의 타입 추론력은 제네릭 문법에서 나온다.**  
 
@@ -158,18 +158,19 @@ List의 원소(element)를 순회 하며,
 대문자 문자열이 있으면 소문자 문자열로 바꿔주고, map(str -> str.toLowerCase()),  
 콘솔 화면에 출력한다. forEach(System.out::println)
 
-스트림의 중간 연산 메서드(intermediate operations)들은 주로 데이터를 가공하거나 필터를 적용해 특정 조건에 맞는 데이터를 걸러 낸다.  
+스트림의 중간 연산(intermediate operations)을 수행하는 메서드들은 주로 데이터를 가공하거나 필터를 적용해 특정 조건에 맞는 데이터를 걸러 낸다.  
 map 메서드는 스트림의 중간 연산 메서드이며, Predicate 함수형 인터페이스(Functional Interface) 규칙에 맞는 람다 식을 입력 받는다.  
 그리고 스트림의 원소를 순회하며, 입력한 람다 식에 따라 내용물을 변환한다.  
 
     스트림 연산에서 사용하는 원소는 전부 상수 취급된다! Stream은 원본 데이터로부터 데이터를 읽기만 할 뿐, 원본 데이터 자체를 변경하지 않는다.  
-     SQL에서 SELECT 구문이 실제 내용물을 변환하지 않고, 특정 속성(attribute)만 조회하는 것과 같다.
+    함수형 프로그래밍을 지향하는 SQL에서 SELECT 구문이 실제 데이터를 변환하지 않고, 특정 속성(attribute)만 프로젝션(Projection) 하는 것과 같다.
 
 정말 신기한점은 람다 식은 메서드 바디만 존재 할 뿐이고, 파라미터와 리턴값의 타입 까지도 컴파일러에게 알려 주지 않는데, 컴파일러는 s가 String 타입임을 정확히 알고 있다.  
 또한 종단 연산(Terminal Operations)인 forEach 메소드의 아규먼트로 System.out::println 메서드 참조를 넘겨 주었다.  
 System.out.println() 메서드는 입력 값으로 모든 기본형 타입과 String, Object 타입 까지 받을 수 있도록 오버로딩 되어 있는데, 아무도 알려주지 않았음에도 String 타입 파라미터를 가진 메서드 시그니처의 println() 메서드로 척척 알아 맞춘다. 
 
-이런 자바 컴파일러의 타입 추론 능력은 전부 제네릭 문법에서 온다. 스트림을 생성하는 과정(Stream Source)의 시작은 stringList 객체 인데, stringList 객체는 제네릭 타입(List\<String>)이다. 따라서 stringList 객체로 스트림을 열면 그 스트림 또한 제네릭 타입(Stream\<String>)이 된다.    
+이런 자바 컴파일러의 타입 추론 능력은 전부 제네릭 문법에서 온다. 스트림을 생성하는 과정(Stream Source)의 시작은 stringList 객체 인데, stringList 객체의 제네릭 타입은 "List\<String>" 이고 이 제네릭 타입의 실제 타입 매개변수는 String 타입이다. 따라서 stringList 객체로 스트림을 열면 그 스트림의 실제 타입 매개변수 또한 String 타입이 된다.  
+
 스트림의 중간 연산과 종단 연산에서 사용되는 메서드도 제네릭 메서드이고, 함수형 인터페이스 또한 제네릭 타입이니, 컴파일러는 메서드 바디만 존재하는 람다 식으로 스스로 타입을 추론해 일을 수행한다.  
 
 한번 stringList 객체를 로 타입으로 선언해보자. 그리고 얼마나 많은 비검사 경고와 타입 캐스팅 에러가 뜨는지 확인해보자. 제네릭 문법이 없는 람다 식과 스트림은 존재 가치가 없다.
@@ -178,7 +179,7 @@ System.out.println() 메서드는 입력 값으로 모든 기본형 타입과 St
 ## **한정적 와일드카드**
 
 매개변수화 타입은 불공변(invariant)이다. 서로 다른 타입 Type1 와 Type2가 있을 때 List\<Type1> 과 List\<Type2>는 그 누구의 상위 타입도, 하위 타입도 아니다. 따라서 List\<String>은 List\<Object>의 하위 타입이 아니다. 왜 제네릭 문법이 이런지는 조금만 생각해보면 알 수 있다. 상위 모듈이 수행 할 수 있는 
-모든 일은 하위 모듈에서도 정상적으로 동작 해야한다.(리스코프 치환 원칙) 그러나 List\<String> 은 문자열을 다루는 객체만을 넣고, 빼고, 세는 일만 할 수 있고, Object 객체를 다루는 일은 하지 못한다.  
+모든 일은 하위 모듈에서도 정상적으로 동작 해야한다.(리스코프 치환 원칙) 그러나 List\<String> 은 문자열을 다루는 객체만을 넣고, 빼고, 세는 일만 할 수 있고, List\<Object> 는 Object 객체를 다루는 일을 한다. List\<String>이 List\<Object>의 책임에 부여된 역할을 정확히 수행 할 수 없으니 리스코프 치환 원칙에 위배 된다. 따라서 불공변인 것이다.  
   
 하지만 가끔은 불공변 방식보다 유도리 있게 제네릭을 사용하고 싶다. 싱글톤 패턴에서 사용한 간단한 스택 예제로 알아보자.
 
@@ -204,11 +205,18 @@ class Stack<T>{
     }
   }
   
-  public T pop(){    
-    @SuppressWarnings("unchecked") T result = (T) elements[--size];
-    elements[size] = null;
-    
-    return result;
+  public T pop(){
+    if(!isEmpty()) {
+      @SuppressWarnings("unchecked") T result = (T) elements[--size];
+      elements[size] = null;
+      
+      return result;
+    }
+    throw new EmptyStackException();
+  }
+  
+  public boolean isEmpty() {
+    return (size <= 0) ? true : false;
   }
 
   ...
@@ -216,15 +224,15 @@ class Stack<T>{
 }
 ```
 
-정렬 할 수 있음을 알리는 인터페이스(Iterable)를 구현 한 모든 원소를, 한번에 스택에 push 해주는 pushAll() 메서드를 추가해 보자.
+정렬 할 수 있음을 알리는 인터페이스(Iterator)를 구현 한 모든 원소를, 한번에 스택에 push 해주는 pushAll() 메서드를 추가해 보자.
 
 ```Java
 class Stack<T>{
   ...
 
   public void pushAll(Iterator<T> src){
-    for (T e : src){
-      push(e);
+    while(src.hasNext()){
+      push(src.next());
     }
   }
 
@@ -236,8 +244,11 @@ class Stack<T>{
 큰 문제 없는 메서드 같지만, 완벽하진 않다. 
 
 ```Java
-class People implements Iterator<People>{
+abstract class People{
+  ...
+}
 
+class Man extends People implements Iterator<Man>{
   @Override
   public boolean hasNext() {
     ...
@@ -247,10 +258,6 @@ class People implements Iterator<People>{
   public People next() {
     ...
   }
-}
-
-class Man extends People{
-
 }
 
 public static void main(String[] args) {
@@ -264,9 +271,88 @@ public static void main(String[] args) {
 
 실제로는 pushAll(iter)를 할 때 에러 메시지가 나온다. peopleStack 객체의 매개변수화 타입은 Stack\<People>로 컴파일 타임 때 이미 정해졌고, 매개변수화 타입은 불공변 이므로, 런타임 도중 다시는 바꿀 수 없다. 따라서 peopleStack 객체의 pushAll(Iterator\<T> src) 메서드도 컴파일 타임 때 pushAll(Iterator\<People> src) 로 이미 "치환" 되었다. 에러 메시지의 내용은 Iterator\<Man> 타입을 Iterator\<People> 타입에 넣을 수 없다는 메시지다.  
 
-People 클래스는 Man 클래스의 상위 클래스이고, 둘의 상속 관계가 적절(is-a, 리스코프 치환 원칙 준수) 하다면, 당연히 상위 클래스인 People 클래스의 원소 순회 방식(Iterator)이 하위 클래스인 Man 클래스에서도 동작 해야 하므로, 별 문제 없어 보이지만 제네릭 문법은 엄격하다.  
+상위 클래스인 People 클래스에서 Iterator를 구현하지 않았더라도, 하위 클래스 Man 클래스에서 Iterator를 구현 했다. 그리고 Man은 People의 하위 타입이면서, Iterator 규약에 맞는 메서드를 적절히 구현 했으니,  pushAll() 메서드의 동작에 문제가 없음을 잘 안다.  
+
+하지만 제네릭 문법은 이를 허락하지 않는다. Iterator\<Man> 타입과 Iterator\<People> 타입은 전혀 다른 타입이므로 타입 캐스팅 될 수 없다.
 
 이 문제를 유연하게 해결 할 수 있는 방법이 바로 한정적 와일드카드 타입이라는 특별한 매개변수화 타입이다.
+
+```Java
+class Stack<T>{
+  ...
+
+  public void pushAll(Iterator<? extends T> src){
+    while(src.hasNext()){
+      push(src.next());
+    }
+  }
+
+  ...
+
+}
+```
+
+이제 pushAll의 입력 매개변수화 타입을 풀어 설명하면 "T의 Iterator"가 아니라, "T 또는 T의 하위 타입의 Iterator" 가 된다. "T 또는 T의 하위 타입의 Itertor"의 자바 문법적인 표현이 Iterator\<? extends T> 다.  
+
+이제 같은 방법으로 popAll() 메서드도 정의해보자.
+
+```Java
+class Stack<T>{
+  ...
+
+  public void popAll(Collection<T> dst){
+    while(dst.hasNext()){
+      push(dst.next());
+    }
+  }
+
+  ...
+
+}
+```
+
+파라미터로 Collection 타입의 dst를 파라미터로 받고, 자신의 원소를 비워나가면서(pop) 그 원소를 입력받은 컬렉션에 add 한다.
+
+```Java
+public static void main(String[] args) {
+  Stack<Man> manStack = new Stack<>(10);
+  Collection<People> peopleList = new ArrayList<>();
+  
+  manStack.popAll(peopleList);
+}
+```
+
+Man 클래스는 People 클래스의 하위 클래스 이지만, Collection\<People>와 Collection\<Man>은 다른 타입이므로 역시 타입 캐스팅이 불가능하다. 
+
+```Java
+class Stack<T>{
+  ...
+
+  public void popAll(Collection<? super T> dst){
+    while(dst.hasNext()){
+      push(dst.next());
+    }
+  }
+
+  ...
+
+}
+```
+
+이제 popAll() 메서드의 입력 매개변수의 타입이 "T의 Collection"이 아니라 "T의 상위 타입의 Collection"이 된다.  
+
+어떤 상황에서 한정적 와일드카드 문법을 사용하는 것이 바람직할까? 조슈아 블로크가 제안한 공식이다.  
+
+**펙스(PECS) : producer-extends, consumer-super**  
+
+매개변수화 타입 T가 생산자(producer)라면 \<? extends T>를 사용하고, 소비자(consumer)라면 \<? super T>를 사용하라는 뜻이다.  
+
+위 Stack 예제에서 pushAll() 메서드는 Stack 내부의 T 타입 원소를 파라미터로 받은 src 객체로 생산 하므로 생산자에 속한다.  
+위 Stack 예제에서 popAll() 메서드는 Stack 내부의 T 타입 원소를 파라미터로 받은 dst 객체로 소비 하므로 소비자에 속한다. 
+
+    단 메서드의 리턴 타입은 한정적 와일드카드가 되어선 안된다. 클라이언트에서 리턴 타입을 받기 위한 객체 또한 한정적 와일드카드 타입으로 받아야 하기 때문이다. 클라이언트는 리턴 타입의 실제 타입 매개변수가 정확히 어떤 타입인지 알 수 없으므로, 클라이언트 측에서 객체를 사용하기 전 타입 캐스팅 코드가 삽입(주로 instanceof) 되는데, 이는 제네릭 문법의 이점을 스스로 버리는 것이다.
+ 
+한정적 와일드카드 문법은 특히 재귀적 타입 한정 문법과 잘 맞는다.
 
 --------------------------------------
 

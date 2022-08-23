@@ -49,8 +49,8 @@ Car 객체의 불변식을 유지하기 위해서는 oilValue의 값이 초기�
    따라서 생성자의 아규먼트 값이 올바른 유효 범위인지 체크하는 경우를 제외하고, 번거로운 불변식 체크가 필요없다.
 > 
   **불변 객체는 스레드 안전(Thread-safe)하다.**
-> 최초 생성 이후로 값이나 상태를 변경할 수 없으니 당연한 결과이다.  
-> 조슈아 블리크는 이 때문에 StringBuffer 클래스를 직접 사용하는 것을 '구닥다리' 라고 했다. String 클래스는 애초에 불변이기 때문이다.
+> 최초 생성 이후로 불변 객체 필드나 상태를 변경할 수 없으니 당연한 결과이다.  
+> 조슈아 블리크는 이 때문에 StringBuffer 클래스를 직접 사용하는 것을 '구닥다리' 라고 했다. String 클래스는 애초에 불변이기 때문이다.  
 > 자세한 내용은 구글링 
 
   **불변 객체는 안심하고 공유가 가능하다.**
@@ -63,6 +63,16 @@ Car 객체의 불변식을 유지하기 위해서는 oilValue의 값이 초기�
 
   **불변 객체임이 보장된다면, 불변 객체끼리의 내부 데이터 공유는 안전하다.**
 > 시간이 나면 자주 사용하는 BigInteger, String 객체의 내부 구현을 구경해보자.
+
+![ex_screenshot](../../../../resources/singleton/images_paulhana6006_post_c1b8668b-62a6-4ee9-8868-2636b146748f_image.png)
+
+    예를 들어 String 변수를 만들고 새로운 String 객체로 초기화 하면, JVM이 String Pool에서 동일한 값의 String을 검색한다. 발견되면 Java 컴파일러는 새로운 String 객체를 Heap Arad에 할당하지 않고 기존 String 객체의 메모리 주소값을 반환한다. 찾을 수 없으면 풀에 추가하고(interning) 해당 주소값을 반환한다.
+
+    String 변수를 만들고 문자열 리터럴로 String 객체를 초기화 하면, Heap Area에 있는 스트링 상수 풀(String Constant Pool)에 문자열 리터럴 값이 올라간다. Constant Pool은 HashMap으로 구현 되었다.
+
+    사용중인 String 객체는 Stack Area 위에서 동작하지만, Constant Pool은 Heap Area 위에서 동작하므로, GC가 사용하지 않는 Constant Pool의 문자열 리터럴 값을 똑똑하게 릴리즈해준다.
+
+    따라서 문자열 리터럴로 String 객체를 초기화 하는 것이 성능상 유리하다.
 
   **불변 객체는 그 자체로 실패 원자성을 제공한다.**
 > 불변 객체의 불변식은 항상 보장되므로, 언제 어디서 예외를 던져도 객체의 내부 상태는 불일치 상태가 되지 않는다.
@@ -217,7 +227,7 @@ DiscountEventPeriod 클래스는 할인 이벤트 기간을 나타내기 위해 
 
 하지만 아직 Date 객체를 이용하는 프로그램은 많을 것이다. Date 객체(start, end)는 위에서 설명한 규약을 모두 지킨(private final, setter mathod 미 보유) 불변 필드이고, 불변 필드만 보유한 DiscountEventPeriod 클래스는 불변 클래스임이 분명하다. 
 
-이제 start와 end의 불변식을 망가뜨려보자.  
+이제 DiscountEventPeriod 객체의 불변식을 망가뜨려보자.  
 
 ```Java
 public static void main(String args[]) {
@@ -229,9 +239,11 @@ public static void main(String args[]) {
   end.setYear(112); // 2012년
 }
 ```
-해당 코드를 삽입하면 setYear() 메서드에 줄이 그어져 있고, 자바 컴파일러의 경고(warning) 메시지가 뜬다. 더 이상 사용하지 않는 메서드라는 사실을 알리기 위해 @Deprecated 에너테이션이 붙어있기 때문이다.  
+Date 객체는 값 객체이고, Date 객체의 가변 필드가 쉽게 노출되어 있어 발생한 이슈이다.
 
 Date 클래스는 오버라이딩 된 메서드나, 정적(static) 메서드를 제외하면 대부분이 @Deprecated 에너테이션이 붙어 있다. 그럼에도 예전에 작성된 낡은 Date 객체를 새로운 날짜 객체로 대체하는 것이 쉽지 않을 수 있다.  
+
+해당 코드를 삽입하면 setYear() 메서드에 줄이 그어져 있고, 자바 컴파일러의 경고(warning) 메시지가 뜬다. 더 이상 사용하지 않는 메서드라는 사실을 알리기 위해 @Deprecated 에너테이션이 붙어있기 때문이다. 
 
 악의적인 외부 공격이나, 클라이언트의 실수를 막기 위해선 생성자에서 받은 가변 파라미터를 방어적 복사(defensive copy)해 자신의 불변 필드를 보호해야 한다.
 
@@ -265,6 +277,24 @@ final class DiscountEventPeriod {
 
 Date 클래스는 Cloneable 인터페이스를 구현 하였으므로, clone() 메서드를 사용 할 수 있지만 사용하지 않았다. Date 클래스는 파생 클래스(하위 클래스)를 만들 수 있는데, final 모디피어가 붙지 않았기 때문이다.
 즉 Date의 clone() 메서드가 아닌 악의적인 하위 클래스의 clone() 메서드가 엉뚱한 인스턴스를 반환할 수도 있다. 만약 이 악의적인 하위 클래스가 Date 객체의 가변 필드 참조를 따로 인스턴스화 해 보관 중이라면 이 인스턴스에 접근해 Date 객체를 이용하는 모든 객체의 불변식을 전부 망가뜨릴 수 있다.
+
+```Java
+class Haha extends Date implements Cloneable{
+  private static final long serialVersionUID = 1L;
+  
+  @Override
+  public Object clone() {
+    return this;
+  }
+  
+  public void malware() {
+    this.setDate(999999);
+    this.setHours(1111111);
+    this.setMinutes(2222222);
+  }
+}
+```
+DiscountEventPeriod 객체의 생성자로 이 객체를 넘겨주고, clone() 메서드로 방어적 복사를 구현했다면, 이후 결과는 뻔하다.
 
 아직 보안 구멍은 더 남아있다.
 
