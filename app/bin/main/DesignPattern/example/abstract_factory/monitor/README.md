@@ -354,6 +354,52 @@ class Stack<T>{
  
 한정적 와일드카드 문법은 특히 재귀적 타입 한정 문법과 잘 맞는다.
 
+```Java
+public static <E extends Comparable<E>> E Max(List<E> list){
+  return list.stream().max((e1, e2) -> e1.compareTo(e2)).orElseThrow();
+}
+```
+
+이 정적 도우미 메서드는 파라미터로 list\<E> 타입의 리스트를 하나 받는다. 이 때 정규 타입 매개변수 E 는 Comparable\<E> 인터페이스를 구현 해야 한다. 즉 \<E extends Comparable\<E>> 는 "E 는 E 자신과 논리적 비교가 가능하다." 라는 뜻이 된다.  
+
+그리고 list의 원소 중 Comparable\<E> 인터페이스 규약에 맞는 메서드(compareTo)를 이용해, 가장 큰 원소를 리턴 해주는 평범한 max 메서드이다.  
+
+이제 이 max 메서드에 한정적 와일드카드 문법을 도입 하여 유연한 메서드로 리팩토링 해보자.  
+
+```Java
+public static <E extends Comparable<? super E>> E Max(List<? extends E> list){
+  return list.stream().max((e1, e2) -> e1.compareTo(e2)).orElseThrow();
+}
+```
+
+### **하위 모듈에서 Comparable 인터페이스를 구현 하지 않더라도, 상위 모듈에서 구현 한 Comparable 인터페이스를 사용 할 수 있다.**
+
+>Man 클래스가 Comparable 인터페이스를 구현 하지 않았더라도, People 클래스에서 Comparable을 구현 했다면 max 메서드를 정상적으로 사용 할 수 있다. 상위 클래스에서 작동하는 모든 기능은 하위 클래스에서도 정상적으로 작동 해야 하기 때문이다. (리스코프 치환 원칙)  
+  
+Comparable<E> 인터페이스를 구현 했다는 것은, "두 E 타입의 객체 논리적 대소비교를 하는 compareTo() 메서드를 인터페이스 규약에 따라 구현한다" 라는 의미다. 즉 E 타입의 객체를 생산 하므로 \<? super E> 가 적절하다.
+
+### **객체지향 프로그래밍의 유연함을 경직된 제네릭 문법에서도 느낄 수 있다.**
+
+>"남성은 사람이다(Man is a People)" 라는 말을 들으면 어색하다고 느끼는 사람은 없다. 따라서 People 클래스와 Man 클래스의 상속 관계는 거의 적절하다. 따라서 우리는 "People man = new Man()" 과 같이 객체의 클래스 타입을 추상화된 상위 클래스로 선언 하여 사용한다. 문제는 실제 타입 매개변수로 Man, People 클래스를 명시 해도 , 매개변수화 타입은 상위 타입과 하위 타입의 계층적 구조가 존재하지 않는다.  
+(List\<People> 은 List\<Man>의 상위 타입이 아니다, 불공변)  
+>
+max 메서드의 역할은 파라미터로 받은 list의 E 타입 원소 중 최대 값을 compareTo 메서드를 이용 해 도출한다. 즉 E 타입의 원소를 소비 하므로 \<? extends E>가 적절하다.
+
 --------------------------------------
 
-## **타입 안전 이종 컨테이너**
+## **타입 안전 이종 컨테이너 패턴(type safe heterogeneous container pattern)**
+
+제네릭이랑 궁합이 잘 맞는 객체는 값 객체이고, 그 이유로 자바의 컬렉션은 대부분 제네릭 타입 클래스로 작성 되었다.  
+
+보통 우리가 자바 컬렉션을 사용할 때 제네릭 타입의 실제 타입 매개변수로 컨테이너 자신을 사용한다.  
+List\<Double>, Map\<Integer, String> 처럼 말이다. 그 중에서도 Map의 키(key) 타입으로 Integer, String을 주로 사용하지만, 더 유연하고 멋진 수단을 소개하고자 한다.  
+
+RDB(Relational Database)로 예를 들어보자, 어떤 한 릴레이션(relation, SQL의 table)은 n 개의 튜플(tuple)의 집합이고, 튜플은 n개의 속성(attribute)을 가진 집합이다. 그리고 하나의 속성이 취할 수 있는 허가된 값의 집합을 도메인(domain) 이라 한다. 그림으로 쉽게 알아보자.
+
+![ex_screenshot](../../../../../resources/abstract_factory/2170804358C9268B2F.png)  
+
+      출처 : https://pjh3749.tistory.com/153
+
+자바와는 사뭇 동떨어진 관계형 모델이지만, 이를 유연하게 표현하는 방법이 있다. Map의 키 타입으로 컨테이너가 아닌 정보 그 자체를 키 타입으로 사용하고, 값(value)을 넣었다 뺄때, 매개변수화 된 키 타입의 정보를 제공 하면 멋질 것 같다.
+
+Map\<Domain, Attribute>, Map\<Domain, Map<A>>
