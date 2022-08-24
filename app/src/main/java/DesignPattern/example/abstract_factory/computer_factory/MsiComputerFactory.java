@@ -7,7 +7,7 @@ import DesignPattern.example.abstract_factory.monitor.SamsungMonitor;
 import DesignPattern.example.abstract_factory.mouse.Mouse;
 import DesignPattern.example.abstract_factory.mouse.SamsungMouse;
 
-public class MsiComputerFactory implements ComputerFactory{
+public final class MsiComputerFactory implements ComputerFactory{
 
   @Override
   public Keyboard CreateKeyboard(String name) {

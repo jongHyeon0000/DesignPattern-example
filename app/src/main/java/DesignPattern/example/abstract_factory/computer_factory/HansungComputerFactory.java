@@ -7,7 +7,7 @@ import DesignPattern.example.abstract_factory.monitor.Monitor;
 import DesignPattern.example.abstract_factory.mouse.AppleMouse;
 import DesignPattern.example.abstract_factory.mouse.Mouse;
 
-public class HansungComputerFactory implements ComputerFactory{
+public final class HansungComputerFactory implements ComputerFactory{
 
   @Override
   public Keyboard CreateKeyboard(String name) {

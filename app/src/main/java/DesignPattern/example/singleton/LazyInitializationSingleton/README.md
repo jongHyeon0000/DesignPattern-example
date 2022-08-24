@@ -1,8 +1,7 @@
 # LazyInitializationSingleton
 
 ## 장점
-> 싱글톤 객체(instance : EagerInitializationSingleton)를 사용할 때
-> 런타임 중 동적으로 싱글톤 객체를 할당 하여 사용할 수 있다.
+> 런타임 중 동적으로 싱글톤 객체 인스턴스를 할당 하여 사용할 수 있다.
 
 -----------------------
        
