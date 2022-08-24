@@ -35,5 +35,7 @@ public class Main {
     
     System.out.println(
         Monitor.LowestPriceMonitorManager.getLowestPriceMonitor(AppleMonitor.class, "GGA-123"));
+    
+    
   }
 }
