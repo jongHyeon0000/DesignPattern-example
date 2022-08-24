@@ -23,5 +23,4 @@ public final class HansungComputerFactory implements ComputerFactory{
   public Monitor CreateMonitor(String name, int cost, int weight, int inch) {
     return new AppleMonitor(name, cost, weight, inch);
   }
-
 }

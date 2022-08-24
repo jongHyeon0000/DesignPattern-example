@@ -48,4 +48,34 @@
 
 구체 팩토리 객체는 오직 특정 객체가 사용 할 제품군을 정해진 규약에 따라 생성하는 책임만 가지고 있다. 따라서 구체 팩토리 객체의 인스턴스는 프로그램 실행 중 하나만 있어도 충분하다. 
 
-구체 팩토리 객체 필드에는 값 데이터가 없고, 객체 내부의 상태가 수정, 변경 될 일도 없으니 불변 객체라고 할 수 있다.
+```Java
+public interface ComputerFactory {
+  public enum Compony {
+    HANSUNG, MSI
+  }
+
+  ComputerFactory HANSUNG_COMPUTER_FACTORY = new HansungComputerFactory();
+  ComputerFactory MSI_COMPUTER_FACTORY = new MsiComputerFactory();
+
+  Keyboard CreateKeyboard(String name);
+  Monitor CreateMonitor(String name, int cost, int weight, int inch);
+  Mouse CreateMouse(int cost, int weight, String modelNumber);
+
+  static ComputerFactory getComputerFactory(Compony compony) {
+    switch (compony) {
+      case HANSUNG:
+        return HANSUNG_COMPUTER_FACTORY;
+      case MSI:
+        return MSI_COMPUTER_FACTORY;
+      default:
+        throw new IllegalStateException();
+    }
+  }
+}
+```
+
+정적 팩터리 메서드(static factory method)를 이용해, 미리 만들어 놓은 팩토리 객체를 캐싱하여 사용하는 방법도 좋다.
+
+
+
+
