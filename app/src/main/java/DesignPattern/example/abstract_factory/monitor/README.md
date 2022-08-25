@@ -153,7 +153,7 @@ public static void SimpleStream() {
 }
 ```
 
-    여기서 말하는 스트림(Stream)은 입출력에 사용되는 스트림이 아니다!
+    여기서 말하는 스트림(Stream)은 입출력에 사용되는 스트림이 아니다.
 
 꽤나 단순한 일을 하는 스트림 함수인데  
 
@@ -170,33 +170,43 @@ map 메서드는 스트림의 중간 연산 메서드이며, Predicate 함수형
 
 그리고 스트림의 원소를 순회하며, 아규먼트에 입력한 람다 식에 따라 내용물을 변환한다.  
 
-    스트림 연산에서 사용하는 원소는 전부 상수 취급된다.  
+    스트림 연산에서 사용하는 원소는 전부 상수 취급된다!  
     Stream은 원본 데이터로부터 데이터를 읽기만 할 뿐, 원본 데이터 자체를 변경하지 않는다.  
     함수형 프로그래밍을 지향하는 SQL에서 SELECT 구문이 실제 데이터를 변환하지 않고,  
     특정 속성(attribute)만 프로젝션(Projection) 하는 것과 같다.
 
-정말 신기한점은 람다 식은 메서드 가 아닌 식(expression)만 존재 할 뿐이고, 파라미터와 리턴값의 타입 까지도 컴파일러에게 알려 주지 않는데, 컴파일러는 s가 String 타입임을 정확히 알고 있다.  
+정말 신기한점은 람다 식은 메서드가 아닌 식(expression)만 존재 할 뿐이고, 파라미터와 리턴값의 타입 까지도 컴파일러에게 알려 주지 않는데, 컴파일러는 s가 String 타입임을 정확히 알고 있다.  
 
 또 종단 연산(Terminal Operations)인 forEach 메소드의 아규먼트로 System.out::println 메서드 참조를 넘겨 주었다.  
 
 System.out.println() 메서드는 입력 값으로 모든 기본형 타입과 String, Object 타입 까지 받을 수 있도록 오버로딩 되어 있는데, 아무도 알려주지 않았음에도 String 타입 파라미터를 가진 메서드 시그니처의 println() 메서드로 척척 알아 맞춘다. 
 
-이런 자바 컴파일러의 타입 추론 능력은 전부 제네릭 문법의 힘이다. 스트림을 생성하는 과정(Stream Source)의 시작은 stringList 객체 인데, stringList 객체의 제네릭 타입은 List\<String> 이고 이 제네릭 타입의 실제 타입 매개변수는 String 타입이다. 따라서 stringList 객체로 스트림을 열면 그 스트림의 실제 타입 매개변수 또한 String 타입이 된다. (Stream\<String>) 
+이런 자바 컴파일러의 타입 추론 능력은 전부 제네릭 문법의 힘이다. 스트림을 생성하는 과정(Stream Source)의 시작은 stringList 객체 인데, stringList 객체의 제네릭 타입은 List\<String> 이고, 이 제네릭 타입의 실제 타입 매개변수는 String 타입이다. 따라서 stringList 객체로 스트림을 열면 그 스트림의 실제 타입 매개변수 또한 String 타입이 된다. (Stream\<String>) 
 
 스트림의 중간 연산과 종단 연산에서 사용되는 메서드도 제네릭 메서드이고, 자바 라이브러리가 제공하는 표준 함수형 인터페이스 또한 전부 제네릭 타입이니, 컴파일러는 람다 식 만으로도 스스로 타입을 추론해 일을 수행한다.  
 
-한번 stringList 객체를 로 타입으로 선언해보자. 그리고 얼마나 많은 비검사 경고와 타입 캐스팅 에러가 뜨는지 확인해보자. 제네릭 문법이 없는 람다 식과 스트림은 상상하기 어렵다.
+한번 stringList 객체를 로 타입으로 선언해보자. 그리고 얼마나 많은 비검사 경고와 타입 캐스팅 에러가 뜨는지 확인해보자. 로 타입으로 람다 식과 스트림을 사용하는건 거의 불가능 할 것이다.
 
 ---------------------
 ## **한정적 와일드카드 타입(bounded wildcard type)**
 
 매개변수화 타입은 불공변(invariant)이다. 서로 다른 타입 Type1 와 Type2가 있을 때 List\<Type1> 과 List\<Type2>는 그 누구의 상위 타입도, 하위 타입도 아니다. 따라서 List\<String>은 List\<Object>의 하위 타입이 아니다. 왜 제네릭 문법이 이렇게 만들어 졌을까?  
 
-상위 모듈과 이를 확장한 하위 모듈이 있을 때 상위 모듈의 동작을 하위 모듈이 완전히 대체 할 수 있어야 한다. (SOLID, 리스코프 치환 원칙 : Liskov Subsitution Principle)  
+상위 모듈과 이를 확장한 하위 모듈이 있을 때 상위 모듈의 동작을 하위 모듈이 완전히 대체 할 수 있어야 한다.  
+(SOLID, 리스코프 치환 원칙 : Liskov Subsitution Principle)  
 
 List\<String> 은 List 구조를 가진 자료구조의 원소로 문자열을 다루는 String 타입 객체만을 다룰 수 있다.  
 List\<Object> 는 List 구조를 가진 자료구조의 원소로 Object 타입 객체만을 다루는 일을 한다. 하지만 자바의 세계에서 Object 객체를 확장하지 않은 객체는 없으므로, 이론상 모든 타입의 객체를 넣을 수 있다.  
-List\<String>이 List\<Object>의 동작을 전부 대체해 수행 할 수 없으니 리스코프 치환 원칙에 위배 된다. 따라서 매개변수화 타입은 불공변으로 설계 된 것이다.  
+
+```Java
+List<Object> objList = new ArrayList<>();
+Object obj = new MyClass();
+
+// 가능!
+objList.add(obj)
+```
+
+List\<String>이 List\<Object>의 동작을 전부 수행 할 수 없으니 리스코프 치환 원칙에 위배 된다. 따라서 매개변수화 타입은 불공변으로 설계 된 것이다.  
   
 하지만 가끔은 불공변 방식보다 유도리 있게 제네릭을 사용하고 싶다. 싱글톤 패턴에서 사용한 간단한 스택 예제로 알아보자.
 
@@ -258,7 +268,7 @@ class Stack<T>{
 }
 ```
 
-큰 문제 없는 메서드 같지만, 완벽하진 않다. 상속 문법을 이용하여 계층 구조를 표현한 People 클래스와 Man 클래스 이다.
+큰 문제 없는 메서드 같지만, 완벽하진 않다. 아래 예제는 상속 문법을 이용하여 계층 구조를 표현한 People 클래스와 Man 클래스 이다.
 
 ```Java
 abstract class People{
@@ -266,7 +276,7 @@ abstract class People{
 }
 
 class Man extends People{
-
+  ...
 }
 
 public static void main(String[] args) {
@@ -278,9 +288,11 @@ public static void main(String[] args) {
 }
 ``` 
 
-실제로는 peopleStack.pushAll(iter) 에서 컴파일 에러 메시지가 나온다. peopleStack 객체의 매개변수화 타입은 Stack\<People>로 컴파일 타임 때 이미 치환 되었고, 따라서 peopleStack 객체의 pushAll(Iterator\<T> src) 메서드도 컴파일 타임 때 pushAll(Iterator\<People> src) 로 치환 되었다. 컴파일 에러 메시지의 내용은 Iterator\<Man> 타입을 Iterator\<People> 타입으로 캐스팅 할 수 없다는 메시지다.  
+실제로는 peopleStack.pushAll(iter) 에서 컴파일 에러 메시지가 나온다. peopleStack 객체의 매개변수화 타입은 Stack\<People>로 peopleStack 객체 내부는 컴파일 타임 때 이미 치환 되어 실체화 되었다.  
 
-우리는 Iterator 인터페이스 규칙에 따라 People 타입의 원소를 순회 하기만 하면 되고, People 타입 으로 하위 타입 Man 객체의 인스턴스를 참조 하는건 자연스러운 일인데, 이럴땐 제네릭 문법이 조금 답답해 보인다.
+따라서 peopleStack 객체의 pushAll(Iterator\<T> src) 메서드도 컴파일 타임 때 pushAll(Iterator\<People> src) 로 실체화 되었다. 컴파일 에러 메시지의 내용은 Iterator\<Man> 타입을 Iterator\<People> 타입으로 캐스팅 할 수 없다는 메시지다. 컴파일 타임 때 이미 실체화 된 코드를 런타임 중 바꿀 수 있다면 자바 문법은 엉망진창이 될 것이다.  
+
+우리는 Iterator 인터페이스 규칙에 따라 People 타입의 원소를 순회 하기만 하면 되고, People 타입 으로 하위 타입 Man 객체의 인스턴스를 참조 하는건 객체지향 세계에선 자연스러운 일인데, 이럴땐 제네릭 문법이 조금 답답해 보인다.
 
 이 문제를 유연하게 해결 할 수 있는 방법이 바로 한정적 와일드카드 타입이라는 특별한 매개변수화 타입이다.
 
@@ -348,7 +360,7 @@ class Stack<T>{
 
 이제 popAll() 메서드의 입력 매개변수의 타입이 "T의 Collection"이 아니라 "T 또는 T의 상위 타입 Collection"이 된다.  
 
-그렇다면 어떤 상황에서 한정적 와일드카드 문법을 사용하는 것이 바람직할까? 조슈아 블로크가 제안한 공식이다.  
+그렇다면 어떤 상황에서 어떤 한정적 와일드카드 문법을 사용하는 것이 바람직할까? 조슈아 블로크가 제안한 공식이다.  
 
 **펙스(PECS) : producer-extends, consumer-super**  
 

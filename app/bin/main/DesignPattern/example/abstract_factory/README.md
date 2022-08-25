@@ -1,8 +1,8 @@
-[제네릭 기술](https://github.com/jongHyeon0000/DesignPattern-example/tree/main/app/src/main/java/DesignPattern/example/abstract_factory/monitor)  
+[제네릭 문법 도입 배경, 람다와 스트림에서의 제네릭 문법, 한정적 와일드카드 타입](https://github.com/jongHyeon0000/DesignPattern-example/tree/main/app/src/main/java/DesignPattern/example/abstract_factory/monitor)  
 
-[equal, hashCode 재정의](https://github.com/jongHyeon0000/DesignPattern-example/tree/main/app/src/main/java/DesignPattern/example/abstract_factory/keyboard)  
+[equal, hashCode 재정의 규약](https://github.com/jongHyeon0000/DesignPattern-example/tree/main/app/src/main/java/DesignPattern/example/abstract_factory/keyboard)  
 
-[인터페이스의 디폴트 메서드](https://github.com/jongHyeon0000/DesignPattern-example/tree/main/app/src/main/java/DesignPattern/example/abstract_factory/bluetooth)
+[인터페이스의 디폴트 메서드 도입 배경](https://github.com/jongHyeon0000/DesignPattern-example/tree/main/app/src/main/java/DesignPattern/example/abstract_factory/bluetooth)
 
 ---------------------
 
