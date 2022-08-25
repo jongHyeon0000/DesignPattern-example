@@ -30,7 +30,8 @@ public static void simplePushMethod(Stack stack, String obj) {
 
 Java8 이상 부터는 컴파일은 가능하지만, 비검사 경고가 두 개 발생한다.
 
-			Stack is a raw type. References to generic type Stack<E> should be parameterized	Monitor.java  
+			Stack is a raw type. References to generic type Stack<E> should be parameterize  
+      Monitor.java  
 
 			Type safety: The method push(Object) belongs to the raw type Stack. 
 			 References to generic type Stack<E> should be parameterized	Monitor.java
@@ -156,24 +157,33 @@ public static void SimpleStream() {
 
 꽤나 단순한 일을 하는 스트림 함수인데  
 
-List의 원소(element)를 순회 하며,  
-대문자 문자열이 있으면 소문자 문자열로 바꿔주고, map(str -> str.toLowerCase()),  
-콘솔 화면에 출력한다. forEach(System.out::println)
+대문자 문자열이 있으면 소문자 문자열로 바꿔주고,
+
+    map(s -> s.toLowerCase())  
+콘솔 화면에 출력한다.
+
+    forEach(System.out::println)
 
 스트림의 중간 연산(intermediate operations)을 수행하는 메서드들은 주로 데이터를 가공하거나 필터를 적용해 특정 조건에 맞는 데이터를 걸러 낸다.  
+
 map 메서드는 스트림의 중간 연산 메서드이며, Predicate 함수형 인터페이스(Functional Interface) 규칙에 맞는 람다 식을 입력 받는다.  
+
 그리고 스트림의 원소를 순회하며, 아규먼트에 입력한 람다 식에 따라 내용물을 변환한다.  
 
-    스트림 연산에서 사용하는 원소는 전부 상수 취급된다. Stream은 원본 데이터로부터 데이터를 읽기만 할 뿐, 원본 데이터 자체를 변경하지 않는다.  
-    함수형 프로그래밍을 지향하는 SQL에서 SELECT 구문이 실제 데이터를 변환하지 않고, 특정 속성(attribute)만 프로젝션(Projection) 하는 것과 같다.
+    스트림 연산에서 사용하는 원소는 전부 상수 취급된다.  
+    Stream은 원본 데이터로부터 데이터를 읽기만 할 뿐, 원본 데이터 자체를 변경하지 않는다.  
+    함수형 프로그래밍을 지향하는 SQL에서 SELECT 구문이 실제 데이터를 변환하지 않고,  
+    특정 속성(attribute)만 프로젝션(Projection) 하는 것과 같다.
 
-정말 신기한점은 람다 식은 메서드 바디만 존재 할 뿐이고, 파라미터와 리턴값의 타입 까지도 컴파일러에게 알려 주지 않는데, 컴파일러는 s가 String 타입임을 정확히 알고 있다.  
+정말 신기한점은 람다 식은 메서드 가 아닌 식(expression)만 존재 할 뿐이고, 파라미터와 리턴값의 타입 까지도 컴파일러에게 알려 주지 않는데, 컴파일러는 s가 String 타입임을 정확히 알고 있다.  
+
 또 종단 연산(Terminal Operations)인 forEach 메소드의 아규먼트로 System.out::println 메서드 참조를 넘겨 주었다.  
+
 System.out.println() 메서드는 입력 값으로 모든 기본형 타입과 String, Object 타입 까지 받을 수 있도록 오버로딩 되어 있는데, 아무도 알려주지 않았음에도 String 타입 파라미터를 가진 메서드 시그니처의 println() 메서드로 척척 알아 맞춘다. 
 
-이런 자바 컴파일러의 타입 추론 능력은 전부 제네릭 문법의 힘이다. 스트림을 생성하는 과정(Stream Source)의 시작은 stringList 객체 인데, stringList 객체의 제네릭 타입은 "List\<String>" 이고 이 제네릭 타입의 실제 타입 매개변수는 String 타입이다. 따라서 stringList 객체로 스트림을 열면 그 스트림의 실제 타입 매개변수 또한 String 타입이 된다.  
+이런 자바 컴파일러의 타입 추론 능력은 전부 제네릭 문법의 힘이다. 스트림을 생성하는 과정(Stream Source)의 시작은 stringList 객체 인데, stringList 객체의 제네릭 타입은 List\<String> 이고 이 제네릭 타입의 실제 타입 매개변수는 String 타입이다. 따라서 stringList 객체로 스트림을 열면 그 스트림의 실제 타입 매개변수 또한 String 타입이 된다. (Stream\<String>) 
 
-스트림의 중간 연산과 종단 연산에서 사용되는 메서드도 제네릭 메서드이고, 함수형 인터페이스 또한 제네릭 타입이니, 컴파일러는 메서드 바디만 존재하는 람다 식으로 스스로 타입을 추론해 일을 수행한다.  
+스트림의 중간 연산과 종단 연산에서 사용되는 메서드도 제네릭 메서드이고, 자바 라이브러리가 제공하는 표준 함수형 인터페이스 또한 전부 제네릭 타입이니, 컴파일러는 람다 식 만으로도 스스로 타입을 추론해 일을 수행한다.  
 
 한번 stringList 객체를 로 타입으로 선언해보자. 그리고 얼마나 많은 비검사 경고와 타입 캐스팅 에러가 뜨는지 확인해보자. 제네릭 문법이 없는 람다 식과 스트림은 상상하기 어렵다.
 
@@ -344,11 +354,14 @@ class Stack<T>{
 
 매개변수화 타입 T가 생산자(producer)라면 \<? extends T>를 사용하고, 소비자(consumer)라면 \<? super T>를 사용하라는 뜻이다.  
 
-위 Stack 예제에서 pushAll() 메서드는 Stack 내부의 T 타입 원소를 파라미터로 받은 src 객체로 생산 하므로 생산자에 속한다.  
-위 Stack 예제에서 popAll() 메서드는 Stack 내부의 T 타입 원소를 파라미터로 받은 dst 객체로 소비 하므로 소비자에 속한다. 
+위 Stack 예제에서 pushAll() 메서드는 Stack 내부의 T 타입 원소를 파라미터로 받은 src 객체를 통해 Stack 객체의 원소를 생산 하므로 생산자에 속한다.  
+위 Stack 예제에서 popAll() 메서드는 Stack 내부의 T 타입 원소를 파라미터로 받은 dst 객체로 Stack 객체의 원소를 소비 하므로 소비자에 속한다. 
 
-    단 메서드의 리턴 타입은 한정적 와일드카드가 되어선 안된다. 클라이언트에서 리턴 타입을 받기 위한 객체 또한 한정적 와일드카드 타입으로 받아야 하기 때문이다.  
-    클라이언트는 리턴 타입의 실제 타입 매개변수가 정확히 어떤 타입인지 알 수 없으므로, 클라이언트 측에서 객체를 사용하기 전 타입 캐스팅 코드가 삽입(주로 instanceof) 되는데, 이는 제네릭 문법의 이점을 스스로 버리는 것이다.
+    단 메서드의 리턴 타입은 한정적 와일드카드가 되어선 안된다.  
+    클라이언트에서 리턴 타입을 받기 위한 객체 또한 한정적 와일드카드 타입으로 받아야 하기 때문이다.  
+    클라이언트는 리턴 타입의 실제 타입 매개변수가 정확히 어떤 타입인지 알 수 없으므로,  
+    클라이언트 측에서 객체를 사용하기 전 타입 캐스팅 코드가 삽입(주로 instanceof) 되는데,  
+    이는 제네릭 문법의 이점을 스스로 버리는 것이다.
  
 한정적 와일드카드 문법은 특히 재귀적 타입 한정 문법과 잘 맞는다.
 
@@ -374,10 +387,12 @@ public static <E extends Comparable<? super E>> E Max(List<? extends E> list){
 
 >Man 클래스가 Comparable 인터페이스를 구현 하지 않았더라도, People 클래스에서 Comparable을 구현 했다면 max 메서드를 정상적으로 사용 할 수 있다. 상위 클래스에서 지원하는 모든 기능은 하위 클래스에서도 정상적으로 작동 해야 하기 때문이다. (리스코프 치환 원칙)  
   
-Comparable<E> 인터페이스를 구현 했다는 것은, "두 E 타입의 논리적 대소비교를 하는 compareTo() 메서드를 인터페이스 규약에 따라 구현한다" 라는 의미다. 즉 E 타입의 객체를 논리적 대소비교를 위해 소비 하므로 \<? super E> 가 적절하다.
+Comparable<E> 인터페이스를 구현 했다는 것은, "두 E 타입의 논리적 대소비교를 하는 compareTo() 메서드를 인터페이스 규약에 따라 구현한다" 라는 의미다.  
+
+따라서 \<E extends Comparable\<E>> 는 E 타입의 객체를 통해 compareTo 메서드를 이용하여 논리적 대소비교를 하겠다는 의미다. 따라서 Comparable은 거의 대부분 소비자 이다.
 
 ### **객체지향 프로그래밍의 유연함을 제네릭 문법에서도 느낄 수 있다.**
 
->"남성은 사람이다(Man is a People)" 라는 말을 들으면 어색하다고 느끼는 사람은 없다. 따라서 People 클래스와 Man 클래스의 상속 관계는 거의 적절하다. 따라서 우리는 "People man = new Man()" 과 같이 객체의 클래스 타입을 추상화된 상위 클래스로 선언 하여 사용한다. 하지만 실제 타입 매개변수가 계층 구조에 있어도, 매개변수화 타입은 상위 타입과 하위 타입의 계층적 구조가 존재하지 않는다.  
+>"남성은 사람이다(Man is a People)" 라는 말을 들으면 어색하다고 느끼는 사람은 없다. 따라서 People 클래스와 Man 클래스의 상속 관계는 거의 적절하다. 따라서 우리는 "People man = new Man()" 과 같이 객체의 클래스 타입을 추상화된 상위 클래스로 선언 하여 사용한다. 하지만 실제 타입 매개변수가 계층 구조상에 있어도, 컴파일 타임 때 실체화 되는 매개변수화 타입은 상위 타입과 하위 타입의 계층적 구조가 존재하지 않는다.  
 >
-max 메서드의 역할은 파라미터로 받은 list의 E 타입 원소 중 최대 값을 도출한다. 즉 E 타입의 원소를 생산하여 compareTo 메서드로 도출 하므로 \<? extends E>가 적절하다.
+max 메서드의 역할은 파라미터로 받은 list의 E 타입 원소 중 최대 값을 도출한다. 즉 E 타입의 원소를 사용 하여 E 타입의 최대 값을 생산해 리턴하므로 \<? extends E>가 적절하다.

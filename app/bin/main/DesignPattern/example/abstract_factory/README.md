@@ -1,3 +1,11 @@
+[제네릭 기술](https://github.com/jongHyeon0000/DesignPattern-example/tree/main/app/src/main/java/DesignPattern/example/abstract_factory/monitor)  
+
+[equal, hashCode 재정의](https://github.com/jongHyeon0000/DesignPattern-example/tree/main/app/src/main/java/DesignPattern/example/abstract_factory/keyboard)  
+
+[인터페이스의 디폴트 메서드](https://github.com/jongHyeon0000/DesignPattern-example/tree/main/app/src/main/java/DesignPattern/example/abstract_factory/bluetooth)
+
+---------------------
+
 # 추상 팩토리 패턴(Abstract Factory Pattern)
 
 ![ex_screenshot](../../../../resources/abstract_factory/176FF73D5039C4BA30.png)
