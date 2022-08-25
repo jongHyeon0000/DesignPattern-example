@@ -1,14 +1,6 @@
 package DesignPattern.example.abstract_builder.npc;
 
 abstract public class NPC {
-  public enum NPC_Type {
-    MERCHANT, HELPER, QUEST
-  }
-
-  public enum NPC_Modifier {
-    FRIENDLY, NEUTRAL, HOSTILE
-  }
-
   public NPC(Builder<?> builder) {
     this.name = builder.name;
     this.npcType = builder.npcType;

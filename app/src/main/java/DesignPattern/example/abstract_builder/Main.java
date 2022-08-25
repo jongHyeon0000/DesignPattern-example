@@ -1,8 +1,8 @@
 package DesignPattern.example.abstract_builder;
 
 import DesignPattern.example.abstract_builder.npc.NPC;
-import DesignPattern.example.abstract_builder.npc.NPC.NPC_Modifier;
-import DesignPattern.example.abstract_builder.npc.NPC.NPC_Type;
+import DesignPattern.example.abstract_builder.npc.NPC_Modifier;
+import DesignPattern.example.abstract_builder.npc.NPC_Type;
 import DesignPattern.example.abstract_builder.npc.Village_NPC;
 
 public class Main {
