@@ -19,10 +19,11 @@
 - Singleton Pattern (22. 08. 24)
 - Decorator Pattern (22. 08. 18)
 - Builder Pattern (22. 08. 19)
+- Abstract Factory Pattern (22. 08. 25)
 
 ## 완성 및 필기 중
-- Abstract Factory Pattern
 - Abstract Builder Pattern (not a design pattern)
+- Composite Pattern + Iterator Pattern
 
 --------------------------
 ## **Reference**
