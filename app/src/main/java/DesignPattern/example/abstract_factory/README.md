@@ -1,3 +1,11 @@
+[제네릭 기술](https://github.com/jongHyeon0000/DesignPattern-example/tree/main/app/src/main/java/DesignPattern/example/abstract_factory/monitor)  
+
+[equal, hashCode 재정의](https://github.com/jongHyeon0000/DesignPattern-example/tree/main/app/src/main/java/DesignPattern/example/abstract_factory/keyboard)  
+
+[인터페이스의 디폴트 메서드](https://github.com/jongHyeon0000/DesignPattern-example/tree/main/app/src/main/java/DesignPattern/example/abstract_factory/bluetooth)
+
+---------------------
+
 # 추상 팩토리 패턴(Abstract Factory Pattern)
 
 ![ex_screenshot](../../../../resources/abstract_factory/176FF73D5039C4BA30.png)
@@ -25,36 +33,63 @@
 > 
 > 제품군은 컴퓨터의 부분 집합이며, 제품군의 라이프 타임 은 독립적이다.
 
-**ComputerFactory**
+**ComputerFactory** (abstract factory)
 > 구체 컴퓨터 객체의 제품군 생성을 담당하는 추상 팩토리 클래스이다.
 
 **ComputerFactoty2**
 > 구체 팩토리 객체를 캐싱하고, 캐싱된 구체 팩토리 객체를 제공하는 정적 팩토리 메소드를 가진 유틸리티 클래스.
 
-**HansungComputerFactory**
+**HansungComputerFactory** (concrete factory)
 > 한성 컴퓨터라는 구체 컴퓨터 객체의 제품군 생성을 담당하는 구체 팩토리 클래스이다.
 
-**Msi
+**MsiComputerFactory** (concrete factory)
+> MSI 컴퓨터라는 구체 컴퓨터 객체의 제품군 생성을 담당하는 구체 팩토리 클래스이다.
 
+**Keyboard** (abstract product)
+> 키보드를 표현 한 추상 클래스
+
+**AppleKeyboard** (concrete product)
+> 애플 제품 키보드를 표현 한 구체 클래스
+
+**SamsungKeyboard** (concrete product)
+> 삼성 제품 키보드를 표현 한 구체 클래스
+
+**Monitor** (abstract product)
+> 모니터를 표현 한 추상 클래스
+
+**AppleMonitor** (concrete product)
+> 애플 제품 모니터를 표현 한 추상 클래스
+
+**SamsungMonitor** (concrete product)
+> 삼성 제품 모니터를 표현 한 추상 클래스
+
+**Mouse** (abstract product)
+> 마우스를 표현 한 추상 클래스
+
+**AppleMouse** (concrete product)
+> 애플 마우스를 표현 한 추상 클래스
+
+**SamsungMouse** (concrete product)
+> 삼성 마우스를 표현 한 추상 클래스
 -------------------
 ### **구체적인 제품 객체의 정보를 클라이언트에게서 분리한다.**
->main 메서드를 살펴보자. 우리는 한성 컴퓨터 객체를 생성하기 위해, 한성 컴퓨터 팩토리 객체를 사용했다.
-한성 컴퓨터 팩토리 객체는 한성 컴퓨터가 사용하는 제품군(삼성 키보드, 애플 마우스, 애플 모니터)을 만들어 한성 컴퓨터 객체의 생성을 도와준다. main 메서드 어디에도 제품군 객체 코드는 존재하지 않는다.
+>main 메서드를 살펴보자. 우리는 한성 컴퓨터 객체를 생성하기 위해, 한성 컴퓨터 팩토리 객체를 이용했다.
+한성 컴퓨터 팩토리 객체는 한성 컴퓨터가 사용하는 제품군(삼성 키보드, 애플 마우스, 애플 모니터)을 만들어 한성 컴퓨터 객체의 생성을 도와준다. main 메서드 어디에도 제품군 객체와 관련된 코드는 존재하지 않는다.
 따라서 사용자는 한성 컴퓨터가 어떤 마우스, 키보드, 모니터를 쓰는지는 알 필요가 없다. 제품 객체를 생성하는 과정과 책임을 캡슐화 하였고, 구체적인 구현 클래스가 클라이언트에게서 분리되었다.
 
-추상 팩토리는 제품 객체를 생성하는 과정과 책임을 캡슐화 하였고, 구체적인 구현 클래스가 클라이언트에게서 분리되었다.
+추상 팩토리는 제품 객체를 생성하는 과정과 책임을 캡슐화 하고, 구체적인 구현 클래스가 클라이언트에게서 분리된다.
 
 ### **제품군을 쉽게 대체할 수 있다.**
->한성 컴퓨터를 MSI 컴퓨터로 바꾸고 싶다면, MSI 컴퓨터 팩토리 객체를 만들기만 하면 된다. MSI 컴퓨터 팩토리 객체는 키보드, 마우스, 모니터를 한 번에 MSI 컴퓨터 제품으로 변경 해준다. 한성 컴퓨터 팩토리와 MSI 컴퓨터 팩토리는 같은 추상 팩토리의 하위 클래스이니, 팩토리 객체를 변경하는 것 또한 유연하고 간단하다.
+>한성 컴퓨터를 MSI 컴퓨터로 바꾸고 싶다면, MSI 컴퓨터 팩토리 객체를 만들기만 하면 된다. MSI 컴퓨터 팩토리 객체는 키보드, 마우스, 모니터를 한 번에 MSI 컴퓨터 제품으로 변경 해준다. 한성 컴퓨터 객체는 한줄의 코드로 MSI 컴퓨터가 되었다. 한성 컴퓨터 팩토리와 MSI 컴퓨터 팩토리는 같은 추상 팩토리의 하위 클래스이니, 구체 팩토리 객체를 변경하는 것 또한 유연하고 간단하다.
 
 ### **코드의 일관성을 높힌다.**
->MSI 컴퓨터는 삼성 제품군 필드만을 사용해야 하는데, MSI 컴퓨터를 만드는 사용자(클라이언트)가 충분히 실수로 애플 제품을 넣을 수도 있다. MSI 컴퓨터 객체의 일관성이 깨져버린 것이다. 팩토리 객체로 제품군을 만드는 과정은 한번에 이루어지므로, 객체 인스턴스 생성 중 객체의 일관성이 망가질 일이 없다.
+>MSI 컴퓨터는 삼성 제품군 필드만을 사용해야 하는데, MSI 컴퓨터를 만드는 사용자(클라이언트)가 실수로 애플 제품을 넣을 수도 있다. MSI 컴퓨터 객체의 일관성이 깨져버린 것이다. 팩토리 객체로 제품군을 만드는 과정은 한번에 이루어지므로, 객체 인스턴스 생성 중 객체의 일관성이 망가질 일이 없다.
 
 ### **새로운 타입의 제품을 제공하기 어렵다**
 >만약 한성 컴퓨터와 MSI 컴퓨터가 스피커 까지 제공해야 한다면, 추상 팩토리와 구체 팩토리가 전부 수정되어야 한다.
 
 --------------------
-## **구현**
+## **새로운 구현 방법 제안**
 
 구체 팩토리 객체는 오직 특정 객체가 사용 할 제품군을 정해진 규약에 따라 생성하는 책임만 가지고 있다. 따라서 구체 팩토리 객체의 인스턴스는 프로그램 실행 중 하나만 있어도 충분하다. 
 
@@ -91,7 +126,8 @@ public final class ComputerFactory2 {
   }
 }
 ```
-    ComputerFactory2는 예제 클래스이고, 구체 팩토리 클래스의 생성자가 private 이라고 가정하자.
+    ComputerFactory2는 예제 클래스이고, 여전히 구체 팩토리 객체의 인스턴스를 public 생성자로 얼마든지 만들 수 있다.  
+    우선 이 사실은 잊어두자. 
 
 ComputerFactory2 클래스의 정적 팩터리 메서드(getComputerFactory)를 이용하여 미리 만들어 놓은 팩토리 객체를 캐싱하여 사용하는 방법도 좋다. 멀티 쓰레드 환경에서도 하나의 구체 팩토리 객체의 인스턴스만이 생성됨을 보장한다. 우리의 구체 팩토리 객체는 불변 객체임으로, 가시성만 확보하였다.  
 
