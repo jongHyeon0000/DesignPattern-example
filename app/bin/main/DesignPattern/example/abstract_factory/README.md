@@ -99,8 +99,8 @@ public final class ComputerFactory2 {
     HANSUNG, MSI
   }
   
-  private static volatile ComputerFactory HANSUNG_COMPUTER_FACTORY;
-  private static volatile ComputerFactory MSI_COMPUTER_FACTORY;
+  private static ComputerFactory HANSUNG_COMPUTER_FACTORY;
+  private static ComputerFactory MSI_COMPUTER_FACTORY;
 
   public static ComputerFactory getComputerFactory(Compony compony) { 
     switch (compony) {
@@ -136,7 +136,7 @@ ComputerFactory2 클래스의 정적 팩터리 메서드(getComputerFactory)를 
 
 현재 ComputerFactory2 클래스는
 
->팩토리 객체를 분기 로직에 따라 생성하는 책임  
+>구체 팩토리 객체를 분기 로직에 따라 다른 구체 팩토리 객체를 생성하는 책임  
 
 >팩토리 객체의 인스턴스는 런타임 중 단 하나만 존재함을 유지하는 불변식을 유지하는 책임
 
