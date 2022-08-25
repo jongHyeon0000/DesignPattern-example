@@ -19,7 +19,7 @@ public class Main {
         computerFactory.CreateMouse(6000, 40, "MAC-34"),
         computerFactory.CreateMonitor("Ms-91", 1200000, 110, 40));
 
-    computerFactory = new HansungComputerFactory();
+    computerFactory = ComputerFactory.HANSUNG_COMPUTER_FACTORY;
     Computer myHansungComputer2 = new Computer(computerFactory.CreateKeyboard("SM-122"),
         computerFactory.CreateMouse(5500, 35, "MAC-35"),
         computerFactory.CreateMonitor("GGA-123", 400000, 230, 40));

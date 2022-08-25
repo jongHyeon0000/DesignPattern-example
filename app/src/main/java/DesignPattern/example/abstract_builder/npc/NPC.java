@@ -1,5 +1,7 @@
 package DesignPattern.example.abstract_builder.npc;
 
+import java.util.List;
+
 abstract public class NPC {
   public NPC(Builder<?> builder) {
     this.name = builder.name;
@@ -48,6 +50,10 @@ abstract public class NPC {
     public T setNpcModifier(NPC_Modifier npcModifier) {
       this.npcModifier = npcModifier;
       return Self();
+    }
+    
+    public static <E extends Comparable> E Max(List<E> list){
+      return list.stream().max((e1, e2) -> e1.compareTo(e2)).orElseThrow();
     }
 
     abstract protected NPC Build();
