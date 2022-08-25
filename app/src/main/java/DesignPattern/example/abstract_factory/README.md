@@ -21,10 +21,20 @@
 > 블루투스 기능을 구현하기 위한 규약이 모인 인터페이스
 
 **Computer**
-> 컴퓨터를 표현하기 위한 클래스이다. 키보드, 모니터, 마우스를 표현한 객체를 필드에 인스턴스화 하여 사용하고 있다. 키보드, 모니터, 마우스는 컴퓨터라는 집합의 원소 이며, 라이프 타임 은 독립적이다.
+> 컴퓨터를 표현하기 위한 클래스이다. 키보드, 모니터, 마우스를 표현한 객체를 필드에 인스턴스화 하여 사용하고 있다. 키보드, 모니터, 마우스는 컴퓨터를 이루는 제품군이다.  
+> 
+> 제품군은 컴퓨터의 부분 집합이며, 제품군의 라이프 타임 은 독립적이다.
 
 **ComputerFactory**
-> 컴퓨터 
+> 구체 컴퓨터 객체의 제품군 생성을 담당하는 추상 팩토리 클래스이다.
+
+**ComputerFactoty2**
+> 구체 팩토리 객체를 캐싱하고, 캐싱된 구체 팩토리 객체를 제공하는 정적 팩토리 메소드를 가진 유틸리티 클래스.
+
+**HansungComputerFactory**
+> 한성 컴퓨터라는 구체 컴퓨터 객체의 제품군 생성을 담당하는 구체 팩토리 클래스이다.
+
+**Msi
 
 -------------------
 ### **구체적인 제품 객체의 정보를 클라이언트에게서 분리한다.**
@@ -49,32 +59,59 @@
 구체 팩토리 객체는 오직 특정 객체가 사용 할 제품군을 정해진 규약에 따라 생성하는 책임만 가지고 있다. 따라서 구체 팩토리 객체의 인스턴스는 프로그램 실행 중 하나만 있어도 충분하다. 
 
 ```Java
-public interface ComputerFactory {
+public final class ComputerFactory2 {
   public enum Compony {
     HANSUNG, MSI
   }
+  
+  private static volatile ComputerFactory HANSUNG_COMPUTER_FACTORY;
+  private static volatile ComputerFactory MSI_COMPUTER_FACTORY;
 
-  ComputerFactory HANSUNG_COMPUTER_FACTORY = new HansungComputerFactory();
-  ComputerFactory MSI_COMPUTER_FACTORY = new MsiComputerFactory();
-
-  Keyboard CreateKeyboard(String name);
-  Monitor CreateMonitor(String name, int cost, int weight, int inch);
-  Mouse CreateMouse(int cost, int weight, String modelNumber);
-
-  static ComputerFactory getComputerFactory(Compony compony) {
+  public static ComputerFactory getComputerFactory(Compony compony) { 
     switch (compony) {
       case HANSUNG:
+        synchronized(HANSUNG_COMPUTER_FACTORY.getClass()) {          
+          if (Objects.nonNull(HANSUNG_COMPUTER_FACTORY)) {
+            HANSUNG_COMPUTER_FACTORY = new HansungComputerFactory();
+          }
+        }
         return HANSUNG_COMPUTER_FACTORY;
+
       case MSI:
+        synchronized(MSI_COMPUTER_FACTORY.getClass()) {          
+          if (Objects.nonNull(MSI_COMPUTER_FACTORY)) {
+            MSI_COMPUTER_FACTORY = new MsiComputerFactory();
+          }
+        }
         return MSI_COMPUTER_FACTORY;
+
       default:
         throw new IllegalStateException();
     }
   }
 }
 ```
+    ComputerFactory2는 예제 클래스이고, 구체 팩토리 클래스의 생성자가 private 이라고 가정하자.
 
-정적 팩터리 메서드(static factory method)를 이용해, 미리 만들어 놓은 팩토리 객체를 캐싱하여 사용하는 방법도 좋다.
+ComputerFactory2 클래스의 정적 팩터리 메서드(getComputerFactory)를 이용하여 미리 만들어 놓은 팩토리 객체를 캐싱하여 사용하는 방법도 좋다. 멀티 쓰레드 환경에서도 하나의 구체 팩토리 객체의 인스턴스만이 생성됨을 보장한다. 우리의 구체 팩토리 객체는 불변 객체임으로, 가시성만 확보하였다.  
+
+    구체 팩토리 객체의 인스턴스는 런타임 중 단 하나만 존재한다
+라는 불변식을 유지하는 책임이 구체 팩토리 클래스에 부여되어, thread-safe 함을 보장하는 코드가 구체 팩토리 클래스에 작성됬다면(GRASP, infomation expert), 이 정적 유틸리티 클래스는 더 멋졌을 것이다.  
+
+현재 ComputerFactory2 클래스는
+
+>팩토리 객체를 분기 로직에 따라 생성하는 책임  
+
+>팩토리 객체의 인스턴스는 런타임 중 단 하나만 존재함을 유지하는 불변식을 유지하는 책임
+
+두 책임이 동시에 부여 되었기 때문이다. (단일 책임 원칙 위반)  
+
+구체 팩토리 클래스를 thread-safe 한 싱글톤 패턴으로 구현하면, 두 번째 책임이 구체 팩토리 객체로 위임된다.
+
+    사실 싱글톤 패턴도 런타임중 인스턴스의 개수를 통제하는 책임과 자신의 비즈니스 로직에 대한 책임  
+    두 책임이 부여되었으므로, 단일 책임 원칙에 위반된다.  
+      
+    싱글톤 패턴을 구글링 해보면 싱글톤 패턴을 생성패턴이라는 사람도 있고, 구조패턴이라는 사람도 있는 이유이다. 디자인 패턴은 객체지향 원칙을 전부 준수하지 않는다. 오히려 원칙을 어기고 더 큰 유연함과 유지보수성, 코드가독성을 얻는 경우도 많기 때문이다.
 
 
 

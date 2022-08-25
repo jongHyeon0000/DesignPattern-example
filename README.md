@@ -16,9 +16,9 @@
 --------------------------
 ## 완성본
 
-- Singleton Pattern  
-- Decorator Pattern
-- Builder Pattern
+- Singleton Pattern (22. 08. 24)
+- Decorator Pattern (22. 08. 18)
+- Builder Pattern (22. 08. 19)
 
 ## 완성 및 필기 중
 - Abstract Factory Pattern
