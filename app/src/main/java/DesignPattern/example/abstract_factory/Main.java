@@ -2,6 +2,8 @@ package DesignPattern.example.abstract_factory;
 
 import DesignPattern.example.abstract_factory.computer.Computer;
 import DesignPattern.example.abstract_factory.computer_factory.ComputerFactory;
+import DesignPattern.example.abstract_factory.computer_factory.ComputerFactory2;
+import DesignPattern.example.abstract_factory.computer_factory.ComputerFactory2.Compony;
 import DesignPattern.example.abstract_factory.computer_factory.HansungComputerFactory;
 import DesignPattern.example.abstract_factory.computer_factory.MsiComputerFactory;
 import DesignPattern.example.abstract_factory.monitor.AppleMonitor;
@@ -19,7 +21,7 @@ public class Main {
         computerFactory.CreateMouse(6000, 40, "MAC-34"),
         computerFactory.CreateMonitor("Ms-91", 1200000, 110, 40));
 
-    computerFactory = ComputerFactory.HANSUNG_COMPUTER_FACTORY;
+    computerFactory = ComputerFactory2.getComputerFactory(Compony.HANSUNG);
     Computer myHansungComputer2 = new Computer(computerFactory.CreateKeyboard("SM-122"),
         computerFactory.CreateMouse(5500, 35, "MAC-35"),
         computerFactory.CreateMonitor("GGA-123", 400000, 230, 40));
