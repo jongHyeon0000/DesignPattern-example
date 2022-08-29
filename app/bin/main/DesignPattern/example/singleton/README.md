@@ -66,11 +66,19 @@ Car 객체의 불변식을 유지하기 위해서는 oilValue의 값이 초기�
 
 ![ex_screenshot](../../../../resources/singleton/images_paulhana6006_post_c1b8668b-62a6-4ee9-8868-2636b146748f_image.png)
 
-    예를 들어 String 변수를 만들고 새로운 String 객체로 초기화 하면, JVM이 String Pool에서 동일한 값의 String을 검색한다. 발견되면 Java 컴파일러는 새로운 String 객체를 Heap Arad에 할당하지 않고 기존 String 객체의 메모리 주소값을 반환한다. 찾을 수 없으면 풀에 추가하고(interning) 해당 주소값을 반환한다.
+    기존 String 객체 인스턴스로 새로운 String 객체를 만들면,  
+    JVM이 String Pool에서 동일한 문자열이 있는지 검색한다.  
 
-    String 변수를 만들고 문자열 리터럴로 String 객체를 초기화 하면, Heap Area에 있는 스트링 상수 풀(String Constant Pool)에 문자열 리터럴 값이 올라간다. Constant Pool은 HashMap으로 구현 되었다.
+    동일한 문자열이 발견되면 Java 컴파일러는 새로운 String 객체를 Heap Area에 생성하지 않고,  
+    동일한 문자열을 가진 String 객체의 메모리 주소값을 반환한다.  
+    찾을 수 없으면 새 String 객체를 풀에 추가하고(interning) 해당 주소값을 반환한다.
 
-    사용중인 String 객체는 Stack Area 위에서 동작하지만, Constant Pool은 Heap Area 위에서 동작하므로, GC가 사용하지 않는 Constant Pool의 문자열 리터럴 값을 똑똑하게 릴리즈해준다.
+    String 변수를 만들고 문자열 리터럴로 String 객체를 초기화 하면,  
+    Heap Area에 있는 스트링 상수 풀(String Constant Pool)에 문자열 리터럴 값이 올라간다.  
+    Constant Pool은 HashMap으로 구현 되었다.
+
+    String 객체는 Stack Area 위에서 동작하지만, Constant Pool은 Heap Area 위에서 동작하므로,  
+    GC가 사용하지 않는 Constant Pool의 문자열 리터럴 값을 똑똑하게 릴리즈해준다.
 
     따라서 문자열 리터럴로 String 객체를 초기화 하는 것이 성능상 유리하다.
 
