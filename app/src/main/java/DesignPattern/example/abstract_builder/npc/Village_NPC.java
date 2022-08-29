@@ -16,7 +16,7 @@ public class Village_NPC extends NPC{
     }
     
     @Override
-    protected Builder Self() {
+    protected Builder self() {
       return this;
     }
   }

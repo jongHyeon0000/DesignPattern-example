@@ -16,7 +16,7 @@ public class Field_NPC extends NPC{
     }
     
     @Override
-    protected Builder Self() {
+    protected Builder self() {
       return this;
     }
   }

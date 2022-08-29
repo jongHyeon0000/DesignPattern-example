@@ -50,9 +50,7 @@ Comparable\<String>을 구현 한 클래스가 있다고 가정하자.
   }
 ```
 
-이를 지키지 않으면 자바 컬렉션이 제공하는 Comparable 타입을 파라미터로 받는 도우미 메서드를 전부 이용하지 못할 것이다.
-
-예제로 살펴보자.
+API 개발자의 상황을 가정한 예제로 살펴보자.
 
 ```Java
 public static <E extends Comparable> E getMax(List<E> list){
@@ -76,13 +74,7 @@ Comparable이 로 타입이라 타입 안정성을 보장 할 수 없다는 내�
   }
 ```
 
-자바 컴파일러는 로 타입으로는 정확한 타입 추론이 불가능하므로, 정규 타입 매개변수 T는 Object가 된다. 당연히 정상적인 대소관계 비교가 가능할 리가 없다.
-
-```Java
-  class simpleClass implements Comparable<simpleClass>{
-
-  }
-```
+자바 컴파일러는 로 타입으로 타입 추론이 불가능하므로, Comparator 인터페이스의 제네릭 정보가 소각되어, 정규 타입 매개변수 T는 Object가 된다. 만약 compare 메서드의 리턴 타입이 T 타입이라면, 메서드 연쇄로 동작하는 스트림의 이용에 큰 차질이 생길 것이다.
 
 위 예제에서 Comparable의 실제 타입 매개변수는 SimpleClass지만, getMax 메서드에서 엉뚱하게 로 타입으로 받아 타입 정보가 소각된 것이다.
 
@@ -94,6 +86,8 @@ public static <E extends Comparable<E>> getMax(List<E> list){
 
 방법은 간단하다.  
 
-    "타입 E는 자기 자신과 어떤 E 타입의 객체와 상호 비교가 가능하다" 
+    "타입 E는 자기 자신과 어떤 E 타입의 객체와 대소관계 비교가 가능하다" 
 
-를 재귀적 타입 한정으로 구현하면 된다.
+를 재귀적 타입 한정으로 구현하면 된다.  
+
+이를 지키지 않으면 자바 컬렉션이 제공하는 Comparable 타입을 파라미터로 받는 도우미 메서드를 전부 이용하지 못할 것이다.
