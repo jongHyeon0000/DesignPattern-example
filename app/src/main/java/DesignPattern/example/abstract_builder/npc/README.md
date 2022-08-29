@@ -65,9 +65,9 @@ list의 원소 중 Comparable 인터페이스 규약에 맞는 메서드(compare
     Type safety: The method compareTo(Object) belongs to the raw type Comparable.  
     References to generic type Comparable<T> should be parameterized
 
-Comparable이 로 타입이라 타입 안정성을 보장 할 수 없다는 내용이다. e1의 타입은 파라미터로 받은 list의 실제 타입 매개변수로 실체화 되니 컴파일러가 타입 추론이 가능하다. e2의 타입은 Comparable의 실제 타입 매개변수로 추론해야 하는데, Comparable은 로 타입이라 제네릭 정보가 소거되므로 당연히 추론이 불가능하다.
+Comparable이 로 타입이라 타입 안정성을 보장 할 수 없다는 내용이다. e1의 타입은 파라미터로 받은 list의 실제 타입 매개변수로 실체화 되니, 컴파일러가 타입 추론이 가능하다. e2의 타입은 Comparable의 실제 타입 매개변수로 추론해야 하는데, Comparable은 로 타입이라 제네릭 정보가 소거되므로 당연히 추론이 불가능하다.
 
-getMax 메서드의 파라미터 타입은 Comparator<? super T> comparator 이다. Comparator 인터페이스는 같은 타입의 두 객체를 파라미터로 받아, 그 두 객체의 대소관계 비교를 하는 compare 추상 메서드를 가진 함수형 인터페이스다.  
+스트림의 중간 연산(intermediate operations)을 담당하는 max 메서드의 파라미터 타입은 Comparator<? super T> comparator 이다. Comparator 인터페이스는 같은 타입의 두 객체를 파라미터로 받아, 그 두 객체의 대소관계 비교를 하는 compare 추상 메서드를 가진 함수형 인터페이스다.  
 
 ```Java
   @FunctionalInterface

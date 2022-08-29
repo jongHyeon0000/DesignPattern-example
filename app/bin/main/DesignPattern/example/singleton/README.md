@@ -67,17 +67,17 @@ Car 객체의 불변식을 유지하기 위해서는 oilValue의 값이 초기�
 ![ex_screenshot](../../../../resources/singleton/images_paulhana6006_post_c1b8668b-62a6-4ee9-8868-2636b146748f_image.png)
 
     기존 String 객체 인스턴스로 새로운 String 객체를 만들면,  
-    JVM이 String Pool에서 동일한 문자열이 있는지 검색한다.  
+    JVM이 String Pool에서 동일한 문자열 리터럴이 있는지 검색한다.  
 
-    동일한 문자열이 발견되면 Java 컴파일러는 새로운 String 객체를 Heap Area에 생성하지 않고,  
-    동일한 문자열을 가진 String 객체의 메모리 주소값을 반환한다.  
+    동일한 문자열 리터럴이 발견되면 Java 컴파일러는 새로운 String 객체를 Heap Area에 생성하지 않고,  
+    동일한 문자열 리터럴을 가진 String 객체의 메모리 주소값을 반환한다.  
     찾을 수 없으면 새 String 객체를 풀에 추가하고(interning) 해당 주소값을 반환한다.
 
     String 변수를 만들고 문자열 리터럴로 String 객체를 초기화 하면,  
     Heap Area에 있는 스트링 상수 풀(String Constant Pool)에 문자열 리터럴 값이 올라간다.  
     Constant Pool은 HashMap으로 구현 되었다.
 
-    String 객체는 Stack Area 위에서 동작하지만, Constant Pool은 Heap Area 위에서 동작하므로,  
+    Constant Pool은 Heap Area에 존재하므로,  
     GC가 사용하지 않는 Constant Pool의 문자열 리터럴 값을 똑똑하게 릴리즈해준다.
 
     따라서 문자열 리터럴로 String 객체를 초기화 하는 것이 성능상 유리하다.
@@ -249,9 +249,7 @@ public static void main(String args[]) {
 ```
 Date 객체는 값 객체이고, Date 객체의 가변 필드가 쉽게 노출되어 있어 발생한 이슈이다.
 
-Date 클래스는 오버라이딩 된 메서드나, 정적(static) 메서드를 제외하면 대부분이 @Deprecated 에너테이션이 붙어 있다. 그럼에도 예전에 작성된 낡은 Date 객체를 새로운 날짜 객체로 대체하는 것이 쉽지 않을 수 있다.  
-
-해당 코드를 삽입하면 setYear() 메서드에 줄이 그어져 있고, 자바 컴파일러의 경고(warning) 메시지가 뜬다. 더 이상 사용하지 않는 메서드라는 사실을 알리기 위해 @Deprecated 에너테이션이 붙어있기 때문이다. 
+Date 클래스는 오버라이딩 된 메서드나, 공개(public)된 정적(static) 메서드를 제외하면 대부분 @Deprecated 에너테이션이 붙어 있다. 그럼에도 예전에 작성된 낡은 Date 객체를 새로운 날짜 객체로 대체하는 것이 쉽지 않을 수 있다.  
 
 악의적인 외부 공격이나, 클라이언트의 실수를 막기 위해선 생성자에서 받은 가변 파라미터를 방어적 복사(defensive copy)해 자신의 불변 필드를 보호해야 한다.
 
