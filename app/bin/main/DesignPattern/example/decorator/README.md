@@ -117,7 +117,7 @@ public class InstrumentedHashSet<E> extends HashSet<E> {
 ```
   public static void main(String args[]){
     InstrumentedHashSet<String> s = new InstrumentedHashSet<>();
-    s.addAll(List.of("틱", "탁탁", "펑"));
+    s.addAll(List.of("가가", "AAA", "123"));
 
     System.out.println(s.getAddCount());
   }
@@ -162,72 +162,18 @@ public class ForwardingSet<E> implements Set<E> {
     this.s = s;
   }
 
-  public void clear() {
-    s.clear();
-  }
-
-  public boolean contains(Object o) {
-    return s.contains(o);
-  }
-
-  public boolean isEmpty() {
-    return s.isEmpty();
-  }
-
-  public int size() {
-    return s.size();
-  }
-
-  public Iterator<E> iterator() {
-    return s.iterator();
-  }
+  ...
 
   public boolean add(E e) {
     return s.add(e);
-  }
-
-  public boolean remove(Object o) {
-    return s.remove(o);
-  }
-
-  public boolean containsAll(Collection<?> c) {
-    return s.containsAll(c);
   }
 
   public boolean addAll(Collection<? extends E> c) {
     return s.addAll(c);
   }
 
-  public boolean removeAll(Collection<?> c) {
-    return s.removeAll(c);
-  }
+  ...
 
-  public boolean retainAll(Collection<?> c) {
-    return s.retainAll(c);
-  }
-
-  public Object[] toArray() {
-    return s.toArray();
-  }
-
-  public <T> T[] toArray(T[] a) {
-    return s.toArray(a);
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    return s.equals(o);
-  }
-
-  @Override
-  public int hashCode() {
-    return s.hashCode();
-  }
-
-  @Override
-  public String toString() {
-    return s.toString();
-  }
 }
 ```
 
@@ -260,8 +206,9 @@ public class InstrumentedSet<E> extends ForwardingSet<E> {
 ![ex_screenshot](../../../../resources/decorator/InstrumentedSet.drawio.png)
 
 구체 클래스를 상속 받는 대신, 추상화된 인터페이스를 구현 함으로써 견고하고 유연한 설계를 얻게 되었다.  
-구체 클래스가 아닌 추상 클래스를 상속받는 것 보다도, 계층 구조가 크지 않다면 인터페이스를 확장 하는 것이 더 유연하다. 
-(item 20)  
+
+    구체 클래스가 아닌 추상 클래스를 상속받는 것 보다도, 계층 구조가 크지 않다면 인터페이스를 확장 하는 것이 더 유연하다. 
+    (item 20)  
 
 새로 바뀐 InstrumentedSet 클래스는 HashSet의 기능을 취하기 위해, 확장(extends)이 아닌 구성(composition)을 사용 했다.  
 심지어 InstrumentedSet 클래스의 내부 구현 방식은 HashSet에 의존하지 않고, Set을 구현한 클래스라면 모두 InstrumentedSet의 내부 구현 방식으로 쓸 수 있으며, 어떤 클래스를 사용할 지를 클래스 외부에서 동적으로 바꿀 수 있다.  
