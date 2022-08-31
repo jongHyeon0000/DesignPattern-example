@@ -10,9 +10,6 @@ public class Main {
     NPC npc1 = new Village_NPC.Builder("monster", NPC_Type.HELPER)
          .setCost(10).setHelper(true).setNpcModifier(NPC_Modifier.NEUTRAL).Build();
     
-    Village_NPC npc21 = new Village_NPC.Builder("monster", NPC_Type.HELPER)
-        .setCost(10).setHelper(true).setNpcModifier(NPC_Modifier.NEUTRAL).Build();
-    
     System.out.println(npc1.toString());
   }
 }
