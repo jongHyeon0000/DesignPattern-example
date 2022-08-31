@@ -51,7 +51,6 @@ abstract public class NPC {
     }
 
     abstract protected NPC Build();
-
     abstract protected T self();
   }
 }
