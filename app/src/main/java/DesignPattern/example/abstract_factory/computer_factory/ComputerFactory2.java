@@ -13,16 +13,16 @@ public final class ComputerFactory2 {
   public static ComputerFactory getComputerFactory(Compony compony) { 
     switch (compony) {
       case HANSUNG:
-        synchronized(HANSUNG_COMPUTER_FACTORY.getClass()) {          
-          if (Objects.nonNull(HANSUNG_COMPUTER_FACTORY)) {
+        synchronized(HansungComputerFactory.class) {          
+          if (Objects.isNull(HANSUNG_COMPUTER_FACTORY)) {
             HANSUNG_COMPUTER_FACTORY = new HansungComputerFactory();
           }
         }
         return HANSUNG_COMPUTER_FACTORY;
 
       case MSI:
-        synchronized(MSI_COMPUTER_FACTORY.getClass()) {          
-          if (Objects.nonNull(MSI_COMPUTER_FACTORY)) {
+        synchronized(MsiComputerFactory.class) {          
+          if (Objects.isNull(MSI_COMPUTER_FACTORY)) {
             MSI_COMPUTER_FACTORY = new MsiComputerFactory();
           }
         }
