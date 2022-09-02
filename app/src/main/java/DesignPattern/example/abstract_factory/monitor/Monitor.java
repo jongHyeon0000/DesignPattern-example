@@ -33,15 +33,11 @@ abstract public class Monitor {
         new HashMap<Class<? extends Monitor>, Map<String, Integer>>();
 
     private static final void putMonitor(Monitor monitor) {
-      Class<? extends Monitor> monitorType = Objects.requireNonNull(monitor).getClass();
+      Map<String, Integer> concreteMonitorMap = lowestPriceMonitorMap.get(monitor.getClass());
 
-      Map<String, Integer> concreteMonitorMap;
-
-      if (Objects.nonNull(concreteMonitorMap = lowestPriceMonitorMap.get(monitorType))) {
+      if (Objects.nonNull(concreteMonitorMap)) {
         if (Objects.nonNull(concreteMonitorMap.get(monitor.getName()))) {
-          int lowestPrice = concreteMonitorMap.get(monitor.getName());
-
-          if (lowestPrice > monitor.getCost()) {
+          if (concreteMonitorMap.get(monitor.getName()) > monitor.getCost()) {
             concreteMonitorMap.put(monitor.getName(), monitor.getCost());
           }
         } else {
@@ -51,24 +47,20 @@ abstract public class Monitor {
         Map<String, Integer> map = new HashMap<>();
         map.put(monitor.getName(), monitor.getCost());
 
-        lowestPriceMonitorMap.put(monitorType, map);
+        lowestPriceMonitorMap.put(monitor.getClass(), map);
       }
     }
 
     public static final Map<String, Integer> getLowestPriceMonitorMap(
         Class<? extends Monitor> monitorType) {
-      Map<String, Integer> concreteMonitorMap =
-          lowestPriceMonitorMap.get(Objects.requireNonNull(monitorType));
-
-      if (Objects.nonNull(concreteMonitorMap)) {
-        return concreteMonitorMap;
-      } else {
-        return Collections.emptyMap();
-      }
+      return (Objects.nonNull(lowestPriceMonitorMap.get(Objects.requireNonNull(monitorType))))
+          ? lowestPriceMonitorMap.get(monitorType)
+          : Collections.emptyMap();
     }
 
     public static final int getLowestPriceMonitor(Class<? extends Monitor> monitorType) {
-      return getLowestPriceMonitorMap(monitorType).values().stream().min((i1, i2) -> i1.compareTo(i2)).orElseThrow();
+      return getLowestPriceMonitorMap(monitorType).values().stream()
+          .min((i1, i2) -> i1.compareTo(i2)).orElseThrow();
     }
   }
 }
