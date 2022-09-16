@@ -6,8 +6,6 @@ import DesignPattern.example.abstract_factory.computer_factory.ComputerFactory2;
 import DesignPattern.example.abstract_factory.computer_factory.ComputerFactory2.Compony;
 import DesignPattern.example.abstract_factory.computer_factory.HansungComputerFactory;
 import DesignPattern.example.abstract_factory.computer_factory.MsiComputerFactory;
-import DesignPattern.example.abstract_factory.monitor.AppleMonitor;
-import DesignPattern.example.abstract_factory.monitor.Monitor;
 
 public class Main {
   public static void main(String[] args) {
@@ -29,15 +27,6 @@ public class Main {
     Computer myHansungComputer3 = new Computer(computerFactory.CreateKeyboard("SM-129"),
         computerFactory.CreateMouse(7500, 42, "MAC_S-35"),
         computerFactory.CreateMonitor("GGAb-12", 1450000, 70, 41));
-
-    System.out
-        .println(Monitor.LowestPriceMonitorManager.getLowestPriceMonitorMap(AppleMonitor.class));
-
-    System.out.println(Monitor.LowestPriceMonitorManager.getLowestPriceMonitor(AppleMonitor.class,
-        myHansungComputer1.getMonitor()));
-
-    System.out.println(
-        Monitor.LowestPriceMonitorManager.getLowestPriceMonitor(AppleMonitor.class, "GGA-123"));
 
   }
 }
